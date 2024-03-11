@@ -1,4 +1,4 @@
-Harmonify is a music harmony engine with the following capabilities:
+Harmonify is a web browser-based music harmony engine with the following capabilities:
 
 NONE AT THE MOMENT
 
