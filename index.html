@@ -4,16 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src = Note.js></script>
     <title>Harmonify</title>
 </head>
 
 <body>
-
     <h1>Hello, World! Harmonify here!</h1>
+    <br>
     <script>
         let counter = 0;
         function increment() {
-            document.body.innerHTML = 'You have been here for ' + counter + ' seconds';
+            let note = noteBuilder("B", false, false);
+            document.body.innerHTML = 'You have been here for ' + counter + ' seconds <br>';
+            document.body.innerHTML = 'Note: ' + note.symbol+ ', equivalent: '+ note.equivalent.symbol;
             counter++;
         }
         setInterval(increment, 1000);

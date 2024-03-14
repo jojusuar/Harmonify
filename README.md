@@ -1,6 +1,6 @@
 Harmonify is a web browser-based music harmony engine with the following capabilities:
 
-NONE AT THE MOMENT
+Calculate equivalent of an altered note
 
 TO-DO:
 -
