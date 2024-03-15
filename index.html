@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src=Note.js></script>
+    <script src=classes/Note.js></script>
+    <script src=adt/CircularLinkedList.js></script>
     <title>Harmonify</title>
 </head>
 
 <body style="background-color: rgb(169, 217, 231);">
     <h1>Enharmonic equivalence calculator</h1>
-    <div class="tenor-gif-embed" data-postid="17553394" data-share-method="host" data-aspect-ratio="1"
-        data-width="3%"><a href="https://tenor.com/view/lmao-cry-tears-emoji-gif-17553394">Lmao Cry Sticker</a>from <a
+    <div class="tenor-gif-embed" data-postid="17553394" data-share-method="host" data-aspect-ratio="1" data-width="3%">
+        <a href="https://tenor.com/view/lmao-cry-tears-emoji-gif-17553394">Lmao Cry Sticker</a>from <a
             href="https://tenor.com/search/lmao-stickers">Lmao Stickers</a></div>
     <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
     <br>
@@ -31,56 +32,7 @@
     <br>
     <button type="button" id="calcButton">Calculate</button>
     <div id="calculatorOutput"></div>
-    <script>
-        let divCalculator = document.getElementById('calculatorOutput');
-        let noteButtons = document.querySelectorAll('.toggleA-button');
-        let alterButtons = document.querySelectorAll('.toggleB-button');
-        let calculatorButton = document.getElementById('calcButton');
-        let noteValue;
-        let flat = false;
-        let sharp = false;
-        noteButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                noteButtons.forEach(btn => {
-                    btn.classList.remove('selected');
-                    btn.style.backgroundColor = 'white';
-                });
-                button.classList.add('selected');
-                button.style.backgroundColor = 'blue';
-                noteValue = button.getAttribute('data-value');
-            });
-        });
-        alterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                alterButtons.forEach(btn => {
-                    btn.classList.remove('selected');
-                    btn.style.backgroundColor = 'white';
-                });
-                button.classList.add('selected');
-                button.style.backgroundColor = 'blue';
-                let alterValue = button.getAttribute('data-value');
-                if (alterValue === 'FLAT') {
-                    flat = true;
-                    sharp = false;
-                }
-                else if (alterValue === 'SHARP') {
-                    flat = false;
-                    sharp = true;
-                }
-                else {
-                    flat = false;
-                    sharp = false;
-                }
-            });
-        });
-        function printEquivalent() {
-            let myNote = noteBuilder(noteValue, flat, sharp);
-            divCalculator.innerHTML = '<h1>' + myNote.symbol + ', equivalent: ' + myNote.equivalent.symbol + '</h1>';
-        }
-        calculatorButton.addEventListener('click', function () {
-            printEquivalent();
-        });
-    </script>
+    <script src="Enharmonic.js"></script>
 </body>
 
 </html>
