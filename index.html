@@ -14,9 +14,9 @@
     <script>
         let counter = 0;
         function increment() {
-            let note = noteBuilder("B", false, false);
+            let note = noteBuilder("F", true, false);
             document.body.innerHTML = 'You have been here for ' + counter + ' seconds <br>';
-            document.body.innerHTML = 'Note: ' + note.symbol+ ', equivalent: '+ note.equivalent.symbol;
+            document.body.innerHTML = 'Note: ' + note.symbol+ ', equivalent: ' + note.equivalent.symbol;
             counter++;
         }
         setInterval(increment, 1000);
