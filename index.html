@@ -4,22 +4,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src = Note.js></script>
+    <script src=Note.js></script>
     <title>Harmonify</title>
 </head>
 
-<body>
-    <h1>Hello, World! Harmonify here!</h1>
+<body style="background-color: rgb(169, 217, 231);">
+    <h1>Enharmonic equivalence calculator</h1>
+    <div class="tenor-gif-embed" data-postid="17553394" data-share-method="host" data-aspect-ratio="1"
+        data-width="3%"><a href="https://tenor.com/view/lmao-cry-tears-emoji-gif-17553394">Lmao Cry Sticker</a>from <a
+            href="https://tenor.com/search/lmao-stickers">Lmao Stickers</a></div>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
     <br>
+    Select a note and its properties from below
+    <br>
+    <button type="button" id="CButton" class="toggleA-button" data-value="C">C</button>
+    <button type="button" id="DButton" class="toggleA-button" data-value="D">D</button>
+    <button type="button" id="EButton" class="toggleA-button" data-value="E">E</button>
+    <button type="button" id="FButton" class="toggleA-button" data-value="F">F</button>
+    <button type="button" id="GButton" class="toggleA-button" data-value="G">G</button>
+    <button type="button" id="AButton" class="toggleA-button" data-value="A">A</button>
+    <button type="button" id="BButton" class="toggleA-button" data-value="B">B</button>
+    <br>
+    <button type="button" id="flatButton" class="toggleB-button" data-value=FLAT>b (flat)</button>
+    <button type="button" id="sharpButton" class="toggleB-button" data-value=SHARP># (sharp)</button>
+    <button type="button" id="naturalButton" class="toggleB-button" data-value=NATURAL>natural</button>
+    <br>
+    <button type="button" id="calcButton">Calculate</button>
+    <div id="calculatorOutput"></div>
     <script>
-        let counter = 0;
-        function increment() {
-            let note = noteBuilder("F", true, false);
-            document.body.innerHTML = 'You have been here for ' + counter + ' seconds <br>';
-            document.body.innerHTML = 'Note: ' + note.symbol+ ', equivalent: ' + note.equivalent.symbol;
-            counter++;
+        let divCalculator = document.getElementById('calculatorOutput');
+        let noteButtons = document.querySelectorAll('.toggleA-button');
+        let alterButtons = document.querySelectorAll('.toggleB-button');
+        let calculatorButton = document.getElementById('calcButton');
+        let noteValue;
+        let flat = false;
+        let sharp = false;
+        noteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                noteButtons.forEach(btn => {
+                    btn.classList.remove('selected');
+                    btn.style.backgroundColor = 'white';
+                });
+                button.classList.add('selected');
+                button.style.backgroundColor = 'blue';
+                noteValue = button.getAttribute('data-value');
+            });
+        });
+        alterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                alterButtons.forEach(btn => {
+                    btn.classList.remove('selected');
+                    btn.style.backgroundColor = 'white';
+                });
+                button.classList.add('selected');
+                button.style.backgroundColor = 'blue';
+                let alterValue = button.getAttribute('data-value');
+                if (alterValue === 'FLAT') {
+                    flat = true;
+                    sharp = false;
+                }
+                else if (alterValue === 'SHARP') {
+                    flat = false;
+                    sharp = true;
+                }
+                else {
+                    flat = false;
+                    sharp = false;
+                }
+            });
+        });
+        function printEquivalent() {
+            let myNote = noteBuilder(noteValue, flat, sharp);
+            divCalculator.innerHTML = '<h1>' + myNote.symbol + ', equivalent: ' + myNote.equivalent.symbol + '</h1>';
         }
-        setInterval(increment, 1000);
+        calculatorButton.addEventListener('click', function () {
+            printEquivalent();
+        });
     </script>
 </body>
+
 </html>
