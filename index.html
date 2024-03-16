@@ -8,17 +8,20 @@
     <script src=adt/CircularLinkedList.js></script>
     <title>Harmonify</title>
 </head>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 
 <body style="background-color: rgb(169, 217, 231);">
-    <h1>Enharmonic equivalence calculator</h1>
-    <div class="tenor-gif-embed" data-postid="17553394" data-share-method="host" data-aspect-ratio="1" data-width="3%">
-        <a href="https://tenor.com/view/lmao-cry-tears-emoji-gif-17553394">Lmao Cry Sticker</a>from <a
-            href="https://tenor.com/search/lmao-stickers">Lmao Stickers</a></div>
-    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    <button type="button" id="enharmonicOption" class="option-button"
+        onclick="toggleElements('EnharmonicButtons')">Enharmonic equivalence
+        calculator</button>
+    <button type="button" id="scaleOption" class="option-button" onclick="toggleElements('ScaleButtons')">Scale
+        builder</button>
+    <h1>Harmonify!</h1>
     <br>
-    Select a note and its properties from below
-    <br>
-    <button type="button" id="CButton" class="toggleA-button" data-value="C">C</button>
     <button type="button" id="DButton" class="toggleA-button" data-value="D">D</button>
     <button type="button" id="EButton" class="toggleA-button" data-value="E">E</button>
     <button type="button" id="FButton" class="toggleA-button" data-value="F">F</button>
@@ -29,8 +32,18 @@
     <button type="button" id="flatButton" class="toggleB-button" data-value=FLAT>b (flat)</button>
     <button type="button" id="sharpButton" class="toggleB-button" data-value=SHARP># (sharp)</button>
     <button type="button" id="naturalButton" class="toggleB-button" data-value=NATURAL>natural</button>
-    <br>
-    <button type="button" id="calcButton">Calculate</button>
+    <div id="EnharmonicButtons" class="hidden">
+        <br>
+        Select a note and its properties from above, then hit
+        <br>
+        <button type="button" id="calcButton">Calculate</button>
+    </div>
+    <div id="ScaleButtons" class="hidden">
+        <br>
+        Select a root note from above, a scale and a mode, then hit the build button
+        <br>
+    </div>
+    <script src="MainOptions.js"></script>
     <div id="calculatorOutput"></div>
     <script src="Enharmonic.js"></script>
 </body>
