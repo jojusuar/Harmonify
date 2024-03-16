@@ -1,5 +1,5 @@
 import DoubleLinkNode from "./DoubleLinkNode";
-class CircularLinkedList {
+export default class CircularLinkedList {
     constructor() {
         this.reference = new DoubleLinkNode();
         this.size = 0;
@@ -36,5 +36,13 @@ class CircularLinkedList {
         elements.forEach(element => {
             this.add(element);
         });
+    }
+
+    get(index) {
+        let temp = this.reference;
+        for (i = 1; i <= index; i++) {
+            temp = temp.getNext;
+        }
+        return temp;
     }
 }
