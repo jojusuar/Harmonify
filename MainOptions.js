@@ -53,11 +53,20 @@ alterButtons.forEach(button => {
     });
 });
 
+let divOutput = document.getElementById("output");
+
+function clearOutput() {
+    while (divOutput.firstChild) {
+        divOutput.removeChild(divOutput.firstChild);
+    }
+};
+
 function toggleElements(divID) {
     let allDivs = document.querySelectorAll('.hidden');
     allDivs.forEach(div => {
         div.style.display = 'none';
     });
+    clearOutput();
     let selected = document.getElementById(divID);
     selected.style.display = 'block';
 };
