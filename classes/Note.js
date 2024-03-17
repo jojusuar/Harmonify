@@ -1,12 +1,12 @@
 class Note {
     constructor(symbol, flat, sharp, calculate) {
         const notes = ["C", "D", "E", "F", "G", "A", "B"];
+        this.symbol = symbol;
         this.flat = flat;
         this.sharp = sharp;
         let index = notes.indexOf(symbol);
         let halfStep = false;
         if (flat) {
-            this.symbol = symbol + "b";
             if (calculate) {
                 if (symbol === "C" || symbol === "F") {
                     halfStep = true;
@@ -20,8 +20,7 @@ class Note {
             }
         }
         else if (sharp) {
-            this.symbol = symbol + "#";
-            if(calculate){
+            if (calculate) {
                 if (symbol === "B" || symbol === "E") {
                     halfStep = true;
                 }
@@ -34,9 +33,22 @@ class Note {
             }
         }
         else {
-            this.symbol = symbol;
             this.equivalent = null;
         }
+    }
+    equals(element) {
+        return this.symbol === element.symbol && this.flat === element.flat && this.sharp === element.sharp;
+    }
+
+    toString() {
+        let string = this.symbol;
+        if (this.flat) {
+            string += "b";
+        }
+        else if (this.sharp) {
+            string += "#";
+        }
+        return string;
     }
 }
 

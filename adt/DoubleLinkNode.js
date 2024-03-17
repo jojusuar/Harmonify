@@ -1,4 +1,4 @@
-export default class DoubleLinkNode {
+class DoubleLinkNode {
     constructor(){
         this.data = null;
         this.previous = null;
