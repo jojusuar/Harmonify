@@ -62,7 +62,7 @@ class CircularLinkedList {
         return string;
     }
 
-    indexOf(element) {
+    indexOfObject(element) {
         let index = 0;
         let temp = this.reference;
         if (temp.getData().equals(element)) {
@@ -72,6 +72,24 @@ class CircularLinkedList {
         index++;
         while (temp !== this.reference) {
             if (temp.getData().equals(element)) {
+                return index;
+            }
+            temp = temp.getNext();
+            index++;
+        }
+        return -1;
+    }
+
+    indexOfString(element) {
+        let index = 0;
+        let temp = this.reference;
+        if (temp.getData().localeCompare(element)) {
+            return index;
+        }
+        temp = this.reference.getNext();
+        index++;
+        while (temp !== this.reference) {
+            if (temp.getData().localeCompare(element)) {
                 return index;
             }
             temp = temp.getNext();
@@ -97,14 +115,20 @@ class CircularLinkedList {
     }
 
     replaceWithEquivalents() {
+        let rule = ["C", "D", "E", "F", "G", "A", "B"];
         let start = this.reference;
         let adjacent = start.getNext();
-        for (let i = 0; i < this.size; i++) {
-            if (start.getData().symbol === adjacent.getData().symbol) {
+        for (let i = 0; i <= this.size; i++) {
+            let diff = rule.indexOf(adjacent.getData().symbol) - rule.indexOf(start.getData().symbol);
+            if (diff === 0) {
                 adjacent.setData(adjacent.getData().equivalent);
+            }
+            else if(diff > 1){
+                return true;
             }
             start = start.getNext();
             adjacent = adjacent.getNext();
         }
+        return false;
     }
 }

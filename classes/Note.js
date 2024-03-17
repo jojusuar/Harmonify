@@ -33,7 +33,22 @@ class Note {
             }
         }
         else {
-            this.equivalent = null;
+            if (symbol === "B") {
+                this.equivalent = new Note("C", true, false, false);
+            }
+            else if (symbol === "C") {
+                this.equivalent = new Note("B", false, true, false);
+            }
+            else if (symbol === "E") {
+                this.equivalent = new Note("F", true, false, false);
+            }
+            else if (symbol === "F") {
+                this.equivalent = new Note("E", false, true, false);
+            }
+            else {
+                this.equivalent = null;
+            }
+
         }
     }
     equals(element) {
