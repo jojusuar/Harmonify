@@ -1,5 +1,4 @@
-import DoubleLinkNode from "./DoubleLinkNode";
-export default class CircularLinkedList {
+class CircularLinkedList {
     constructor() {
         this.reference = new DoubleLinkNode();
         this.size = 0;
@@ -12,21 +11,14 @@ export default class CircularLinkedList {
     add(content) {
         if (this.isEmpty()) {
             this.reference.setData(content);
-        }
-        else if (this.reference.getPrevious() === null) {
-            this.reference.setNext(new DoubleLinkNode());
-            this.reference.next.setNext(this.reference);
-            this.reference.next.setPrevious(this.reference);
-            this.reference.setPrevious(this.reference.next);
-            this.reference.next.setData(content);
-        }
-        else { //apparently Javascript does let me directly modify attributes of an object stored in a variable lol
-            let prev = this.reference.previous;
+            this.reference.setNext(this.reference);
+            this.reference.setPrevious(this.reference);
+        } else {
             let temp = new DoubleLinkNode();
             temp.setData(content);
-            temp.setPrevious(prev);
             temp.setNext(this.reference);
-            prev.setNext(temp);
+            temp.setPrevious(this.reference.previous);
+            this.reference.previous.setNext(temp);
             this.reference.setPrevious(temp);
         }
         this.size++;
@@ -40,9 +32,79 @@ export default class CircularLinkedList {
 
     get(index) {
         let temp = this.reference;
-        for (i = 1; i <= index; i++) {
-            temp = temp.getNext;
+        for (let i = 0; i < index; i++) {
+            temp = temp.getNext();
+        }
+        return temp.getData();
+    }
+
+    getNode(index) {
+        let temp = this.reference;
+        for (let i = 0; i < index; i++) {
+            temp = temp.getNext();
         }
         return temp;
+    }
+
+    changeReference(index) {
+        this.reference = this.getNode(index);
+    }
+
+    toString() {
+        let string = "";
+        let start = this.reference;
+        string += start.getData().toString();
+        start = start.getNext();
+        while (start !== this.reference) {
+            string += " - " + start.getData().toString();
+            start = start.getNext();
+        }
+        return string;
+    }
+
+    indexOf(element) {
+        let index = 0;
+        let temp = this.reference;
+        if (temp.getData().equals(element)) {
+            return index;
+        }
+        temp = this.reference.getNext();
+        index++;
+        while (temp !== this.reference) {
+            if (temp.getData().equals(element)) {
+                return index;
+            }
+            temp = temp.getNext();
+            index++;
+        }
+        return -1;
+    }
+
+    replace(target, element) {
+        let temp = this.reference;
+        if (temp.getData().equals(target)) {
+            temp.setData(element);
+            return;
+        }
+        temp = this.reference.getNext();
+        while (temp !== this.reference) {
+            if (temp.getData().equals(target)) {
+                temp.setData(element);
+                return;
+            }
+            temp = temp.getNext();
+        }
+    }
+
+    replaceWithEquivalents() {
+        let start = this.reference;
+        let adjacent = start.getNext();
+        for (let i = 0; i < this.size; i++) {
+            if (start.getData().symbol === adjacent.getData().symbol) {
+                adjacent.setData(adjacent.getData().equivalent);
+            }
+            start = start.getNext();
+            adjacent = adjacent.getNext();
+        }
     }
 }
