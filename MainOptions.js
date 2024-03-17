@@ -9,10 +9,10 @@ optionButtons.forEach(button => {
         button.style.backgroundColor = 'yellow';
     });
 });
-let enharmonicToggle = document.getElementById("EnharmonicButtons");
-let enharmonicOpt = document.getElementById("enharmonicOption");
-enharmonicOpt.style.backgroundColor = 'yellow';
-enharmonicToggle.style.display = "block";
+let defaultToggle = document.getElementById("ScaleButtons");
+let defaultOpt = document.getElementById("scaleOption");
+defaultOpt.style.backgroundColor = 'yellow';
+defaultToggle.style.display = "block";
 let noteButtons = document.querySelectorAll('.toggleA-button');
 let alterButtons = document.querySelectorAll('.toggleB-button');
 let noteValue;
