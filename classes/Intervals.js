@@ -1,14 +1,31 @@
 class Intervals{
-    constructor(name){
+    constructor(name, mode){
         this.name = name;
+        let intervalArray;
+        let pentatonicSpecialCase = false;
         if(name==="DIATONIC"){
-            this.intervalArray=[2,2,1,2,2,2];
+            intervalArray=[2,2,1,2,2,2,1];
         }
         if(name==="PENTATONIC"){
-            this.intervalArray=[2,2,3,2];
+            intervalArray=[2,2,3,2,3];
+            pentatonicSpecialCase = true;
         }
-        if(name==="MELODIC"){
-            this.intervalArray=[2,2,2,2,1,2];
+        if(name==="MELODIC_ASC"){
+            intervalArray=[2,2,2,2,1,2,1];
         }
+        if(name==="MELODIC_DESC"){
+            intervalArray=[2,2,1,2,2,2,1];
+        }
+        this.intervalArray = shiftMode(intervalArray, mode, pentatonicSpecialCase);
     }
+}
+
+function shiftMode(array, mode, special){
+    let shifted = [];
+    shifted.push(...array.slice(mode));
+    shifted.push(...array.slice(0, mode));
+    if(special){
+        return shifted.slice(0,4);
+    }
+    return shifted.slice(0,6);
 }

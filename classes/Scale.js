@@ -1,5 +1,5 @@
 class Scale {
-    constructor(root, intervals, mode) {
+    constructor(root, intervals) {
         let chromatic = new CircularLinkedList();
         let natural = [noteBuilder("C", false, false), noteBuilder("C", false, true), noteBuilder("D", false, false), noteBuilder("D", false, true), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("F", false, true), noteBuilder("G", false, false), noteBuilder("G", false, true), noteBuilder("A", false, false), noteBuilder("A", false, true), noteBuilder("B", false, false)];
         let altered = [noteBuilder("C", false, false), noteBuilder("D", true, false), noteBuilder("D", false, false), noteBuilder("E", true, false), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("G", true, false), noteBuilder("G", false, false), noteBuilder("A", true, false), noteBuilder("A", false, false), noteBuilder("B", true, false), noteBuilder("B", false, false)];
