@@ -10,6 +10,9 @@ class Intervals{
             intervalArray=[2,2,3,2,3];
             pentatonicSpecialCase = true;
         }
+        if(name==="HARMONIC"){
+            intervalArray=[2,2,1,3,1,2,1];
+        }
         if(name==="MELODIC_ASC"){
             intervalArray=[2,2,2,2,1,2,1];
         }
