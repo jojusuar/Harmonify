@@ -26,7 +26,9 @@ class Intervals{
 function shiftMode(array, mode, special){
     let shifted = [];
     shifted.push(...array.slice(mode));
-    shifted.push(...array.slice(0, mode));
+    if(mode !== 0){
+        shifted.push(...array.slice(0, mode));
+    }
     if(special){
         return shifted.slice(0,4);
     }
