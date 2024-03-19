@@ -1,3 +1,9 @@
+if (!sessionStorage.getItem('reloaded')) {
+    sessionStorage.setItem('reloaded', 'true');
+    window.location.reload(true);
+} else {
+    sessionStorage.removeItem('reloaded');
+}
 let optionButtons = document.querySelectorAll('.option-button');
 optionButtons.forEach(button => {
     button.addEventListener('click', () => {

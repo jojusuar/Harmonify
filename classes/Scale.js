@@ -1,5 +1,5 @@
 class Scale {
-    constructor(root, intervals) {
+    constructor(root, intervals, pentatonic) {
         let chromatic = new CircularLinkedList();
         let natural = [noteBuilder("C", false, false), noteBuilder("C", false, true), noteBuilder("D", false, false), noteBuilder("D", false, true), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("F", false, true), noteBuilder("G", false, false), noteBuilder("G", false, true), noteBuilder("A", false, false), noteBuilder("A", false, true), noteBuilder("B", false, false)];
         let altered = [noteBuilder("C", false, false), noteBuilder("D", true, false), noteBuilder("D", false, false), noteBuilder("E", true, false), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("G", true, false), noteBuilder("G", false, false), noteBuilder("A", true, false), noteBuilder("A", false, false), noteBuilder("B", true, false), noteBuilder("B", false, false)];
@@ -17,10 +17,20 @@ class Scale {
         indexes.forEach(index => {
             notes.add(chromatic.get(index));
         });
-        if (notes.replaceWithEquivalents()) {
+        if (notes.replaceWithEquivalents(pentatonic)) {
             chromatic = new CircularLinkedList();
+            let corrector = null;
+            if(root.equals(noteBuilder("B", false, false)) || root.equals(noteBuilder("C", true, false))){ //the hackiest, most unintelligent fix ever for a very probable logic issue above
+                corrector = noteBuilder("C", true, false);
+                chromatic.add(corrector);
+            }
             chromatic.addAll(altered);
-            rootIndex = chromatic.indexOfObject(root.equivalent);
+            if(root.symbol === "C" && corrector !== null){
+                rootIndex = chromatic.indexOfObject(root);
+            }
+            else{
+                rootIndex = chromatic.indexOfObject(root.equivalent);
+            }
             if (rootIndex < 0) {
                 rootIndex = chromatic.indexOfObject(root);
             }
@@ -33,7 +43,7 @@ class Scale {
             indexes.forEach(index => {
                 notes.add(chromatic.get(index));
             });
-            notes.replaceWithEquivalents();
+            notes.replaceWithEquivalents(pentatonic);
         }
         this.notes = notes;
     }
