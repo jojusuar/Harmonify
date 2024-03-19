@@ -1,9 +1,9 @@
-let scaleBtn = document.getElementById("scaleButton");
-let scaleCB = document.getElementById("scaleSelector");
-let modeCB = document.getElementById("modeSelector");
 let pentatonicFlag = false;
 
 function handleScale() {
+    let scaleBtn = document.getElementById("scaleButton");
+    let scaleCB = document.getElementById("scaleSelector");
+    let modeCB = document.getElementById("modeSelector");
     let choiceIndex = scaleCB.selectedIndex;
     let choice = scaleCB[choiceIndex];
     if (choice.value === "PENTATONIC") {
@@ -16,6 +16,9 @@ function handleScale() {
 }
 
 function printScale() {
+    let scaleBtn = document.getElementById("scaleButton");
+    let scaleCB = document.getElementById("scaleSelector");
+    let modeCB = document.getElementById("modeSelector");
     let choiceIndex = scaleCB.selectedIndex;
     let choice = scaleCB[choiceIndex];
     let modeIndex = modeCB.selectedIndex;
@@ -24,6 +27,3 @@ function printScale() {
     let string = "";
     divOutput.innerHTML = '<h1>' + myScale.notes.toString() + '</h1>';
 }
-scaleBtn.addEventListener('click', function () {
-    printScale();
-});

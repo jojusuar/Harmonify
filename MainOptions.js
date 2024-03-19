@@ -59,6 +59,9 @@ alterButtons.forEach(button => {
     });
 });
 
+let scaleDiv = document.getElementById("ScaleButtons");
+let scaleDropdowns = '<select id="scaleSelector" onchange="handleScale()"><option value="DIATONIC" selected>Diatonic (natural)</option><option value="PENTATONIC">Pentatonic</option><option value="HARMONIC">Harmonic</option><option value="MELODIC_ASC">Melodic (ascending)</option><option value="MELODIC_DESC">Melodic (descending)</option></select><select id="modeSelector"><option value=0 selected>I. Ionian (major)</option><option value=1>II. Dorian</option><option value=2>III. Phrygian</option><option value=3>IV. Lydian</option><option value=4>V. Mixolydian</option><option value=5>VI. Aeolian (minor)</option><option value=6>VII. Locrian</option></select>';
+
 let divOutput = document.getElementById("output");
 
 function clearOutput() {
@@ -67,7 +70,7 @@ function clearOutput() {
     }
 };
 
-function toggleElements(divID) {
+function toggleElements(buttonID, divID) {
     let allDivs = document.querySelectorAll('.hidden');
     allDivs.forEach(div => {
         div.style.display = 'none';
@@ -75,4 +78,10 @@ function toggleElements(divID) {
     clearOutput();
     let selected = document.getElementById(divID);
     selected.style.display = 'block';
+    if(buttonID === 'scaleOption'){
+        scaleDiv.innerHTML = scaleDropdowns + '<br> Select a root note, a scale and a greek mode from above, then hit the build button to generate the scale <br> <button type="button" id="scaleButton" onclick="printScale()">Build scale</button>';
+    }
+    else if(buttonID === 'harmonicCircleOption'){
+        scaleDiv.innerHTML = scaleDropdowns + '<br> Select a tonic chord, a scale and a greek mode from above, then hit the build button to generate the harmonic circle <br> <button type="button" id="harmonicCircleButton" onclick="printHarmonicCircle()">Build harmonic circle</button>';
+    }
 };

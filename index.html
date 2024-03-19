@@ -19,10 +19,11 @@
 
 <body style="background-color: rgb(169, 217, 231);">
     <button type="button" id="enharmonicOption" class="option-button"
-        onclick="toggleElements('EnharmonicButtons')">Enharmonic equivalence
+        onclick="toggleElements('enharmonicOption', 'EnharmonicButtons')">Enharmonic equivalence
         calculator</button>
-    <button type="button" id="scaleOption" class="option-button" onclick="toggleElements('ScaleButtons')">Scale
+    <button type="button" id="scaleOption" class="option-button" onclick="toggleElements('scaleOption', 'ScaleButtons')">Scale
         builder</button>
+    <button type="button" id="harmonicCircleOption" class="option-button" onclick="toggleElements('harmonicCircleOption', 'ScaleButtons')">Harmonic circle builder</button>
     <h1>Harmonify!</h1>
     <br>
     <button type="button" id="DButton" class="toggleA-button" data-value="C">C</button>
@@ -62,12 +63,13 @@
         <br>
         Select a root note, a scale and a greek mode from above, then hit the build button to generate the scale
         <br>
-        <button type="button" id="scaleButton">Build scale</button>
+        <button type="button" id="scaleButton" onclick="printScale()">Build scale</button>
     </div>
     <div id="output"></div>
     <script src="MainOptions.js"></script>
     <script src="Enharmonic.js"></script>
     <script src="ScaleBuilder.js"></script>
+    <script src="HarmonicCircleBuilder.js"></script>
 </body>
 
 </html>
