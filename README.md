@@ -1,7 +1,7 @@
 Harmonify is a web browser-based music harmony engine.
 
 CAPABILITIES: 
-- Generate diatonic, pentatoni, harmonic or melodic scale for any root note and greek mode
+- Generate diatonic, pentatonic, harmonic or melodic scale for any root note and greek mode
 -  Calculate equivalent of an altered note
 
 TO-DO:
