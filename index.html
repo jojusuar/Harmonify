@@ -7,6 +7,8 @@
     <script src=classes/Note.js></script>
     <script src=classes/Intervals.js></script>
     <script src=classes/Scale.js></script>
+    <script src=classes/Chord.js></script>
+    <script src=classes/HarmonicCircle.js></script>
     <script src=adt/DoubleLinkNode.js></script>
     <script src=adt/CircularLinkedList.js></script>
     <title>Harmonify</title>
@@ -21,9 +23,11 @@
     <button type="button" id="enharmonicOption" class="option-button"
         onclick="toggleElements('enharmonicOption', 'EnharmonicButtons')">Enharmonic equivalence
         calculator</button>
-    <button type="button" id="scaleOption" class="option-button" onclick="toggleElements('scaleOption', 'ScaleButtons')">Scale
+    <button type="button" id="scaleOption" class="option-button"
+        onclick="toggleElements('scaleOption', 'ScaleButtons')">Scale
         builder</button>
-    <button type="button" id="harmonicCircleOption" class="option-button" onclick="toggleElements('harmonicCircleOption', 'ScaleButtons')">Harmonic circle builder</button>
+    <button type="button" id="harmonicCircleOption" class="option-button"
+        onclick="toggleElements('harmonicCircleOption', 'ScaleButtons')">Harmonic circle builder</button>
     <h1>Harmonify!</h1>
     <br>
     <button type="button" id="DButton" class="toggleA-button" data-value="C">C</button>
@@ -70,6 +74,12 @@
     <script src="Enharmonic.js"></script>
     <script src="ScaleBuilder.js"></script>
     <script src="HarmonicCircleBuilder.js"></script>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <p></p>
+        </div>
+    </div>
 </body>
 
 </html>

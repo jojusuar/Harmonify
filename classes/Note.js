@@ -77,3 +77,47 @@ function noteBuilder(symbol, flat, sharp) {
     }
     return note;
 }
+
+function getSemitoneDifference(note1, note2) {
+    let allNotes = new CircularLinkedList();
+    let notesArray = [noteBuilder("C", false, false), noteBuilder("C", false, true), noteBuilder("D", false, false), noteBuilder("D", false, true), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("F", false, true), noteBuilder("G", false, false), noteBuilder("G", false, true), noteBuilder("A", false, false), noteBuilder("A", false, true), noteBuilder("B", false, false)];
+    allNotes.addAll(notesArray);
+    let note1Index = 0;
+    let note2Index = 0;
+    let note1found = false;
+    let note2found = false;
+    let current = allNotes.reference;
+    if (note1.equals(current.getData()) || note1.equals(current.getData().equivalent)) {
+        note1found = true;
+    }
+    if (note2.equals(current.getData()) || note2.equals(current.getData().equivalent)) {
+        note2found = true;
+    }
+    if (!note1found) {
+        note1Index++;
+    }
+    if (!note2found) {
+        note2Index++;
+    }
+    current = current.getNext();
+    while (current !== allNotes.reference && (!note1found || !note2found)) {
+        if (!note1found && (note1.equals(current.getData()) || note1.equals(current.getData().equivalent))) {
+            note1found = true;
+        }
+        if (!note2found && (note2.equals(current.getData()) || note2.equals(current.getData().equivalent))) {
+            note2found = true;
+        }
+        if (!note1found) {
+            note1Index++;
+        }
+        if (!note2found) {
+            note2Index++;
+        }
+        current = current.getNext();
+    }
+    let difference = note2Index - note1Index;
+    if (difference < 0) {
+        difference = 12 + difference;
+    }
+    return difference;
+}
