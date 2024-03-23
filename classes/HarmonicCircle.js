@@ -1,12 +1,12 @@
 class HarmonicCircle {
-    constructor(scale) {
+    constructor(scale, allTensions) {
         let chords = new CircularLinkedList();
         let current = scale.notes.reference;
         let stop = current;
-        chords.add(new Chord(current.getData(), scale));
+        chords.add(new Chord(current.getData(), scale, allTensions));
         current = current.getNext();
         while (current !== stop) {
-            chords.add(new Chord(current.getData(), scale));
+            chords.add(new Chord(current.getData(), scale, allTensions));
             current = current.getNext();
         }
         this.chords = chords;
