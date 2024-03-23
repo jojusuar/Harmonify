@@ -117,9 +117,7 @@ class Chord {
         let extendedChordSymbol = root.toString();
         let tensionString = "";
         if (!hasNinth || altered9th) {
-            if (!hasNinth) {
-                tensionString += "7";
-            }
+            tensionString += "7";
             availableSymbols.forEach(symbol => {
                 tensionString += "(" + symbol + ")";
             });
