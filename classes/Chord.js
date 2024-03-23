@@ -134,7 +134,7 @@ class Chord {
             else if (altered13th) {
                 tensionString += availableSymbols[1] + "(" + availableSymbols[2] + ")";
             }
-            else {
+            else if (this.major3rd || !this.major7th) {
                 tensionString += availableSymbols.pop();
             }
         }
