@@ -76,6 +76,7 @@ function toggleElements(buttonID, divID) {
     allDivs.forEach(div => {
         div.style.display = 'none';
     });
+    allAvailableTensions = false;
     clearOutput();
     closePopup();
     let selected = document.getElementById(divID);
