@@ -11,3 +11,4 @@ TO-DO:
 - Improve UI design xdn't
 - Replace enharmonic equivalence calculator with semitone difference calculator
 - Chord name calculator given input notes
+- Dark mode
