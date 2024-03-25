@@ -13,18 +13,28 @@ function printHarmonicCircle() {
     let myHarmonicCircle = new HarmonicCircle(myScale, allAvailableTensions);
     let currentChord = myHarmonicCircle.chords.reference;
     let formattedComponents = formatComponents(currentChord.getData());
-    let htmlCode = '<button onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';
+    let htmlCode = '<button class="chord-button" onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';
     currentChord = currentChord.getNext();
     while (currentChord !== myHarmonicCircle.chords.reference) {
         formattedComponents = formatComponents(currentChord.getData());
-        htmlCode += '<button onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';
+        htmlCode += '<button class="chord-button" onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';
         currentChord = currentChord.getNext();
     }
     divOutput.innerHTML = htmlCode;
+    let chordButtons = document.querySelectorAll('.chord-button');
+    chordButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            chordButtons.forEach(btn => {
+                btn.style.backgroundColor = 'rgb(39, 40, 41)';
+            });
+            button.classList.add('selected');
+            button.style.backgroundColor = 'rgb(70, 70, 70)';
+        });
+    });
 }
 
 function formatComponents(chord) {
-    string = ' <h2>' + chord.toString() + ' components: <ul>';
+    string = ' <h2>' + chord.toString() + ' components: <ul class=custom-list>';
     chord.components.forEach(note => {
         string += '<li>' + note.toString() + '</li>';
     });
