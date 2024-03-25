@@ -20,15 +20,15 @@ class Scale {
         if (notes.replaceWithEquivalents(pentatonic)) {
             chromatic = new CircularLinkedList();
             let corrector = null;
-            if(root.equals(noteBuilder("B", false, false)) || root.equals(noteBuilder("C", true, false))){ //the hackiest, most unintelligent fix ever for a very probable logic issue above
+            if (root.equals(noteBuilder("B", false, false)) || root.equals(noteBuilder("C", true, false))) { //the hackiest, most unintelligent fix ever for a very probable logic issue above
                 corrector = noteBuilder("C", true, false);
                 chromatic.add(corrector);
             }
             chromatic.addAll(altered);
-            if(root.symbol === "C" && corrector !== null){
+            if (root.symbol === "C" && corrector !== null) {
                 rootIndex = chromatic.indexOfObject(root);
             }
-            else{
+            else {
                 rootIndex = chromatic.indexOfObject(root.equivalent);
             }
             if (rootIndex < 0) {
@@ -43,7 +43,26 @@ class Scale {
             indexes.forEach(index => {
                 notes.add(chromatic.get(index));
             });
-            notes.replaceWithEquivalents(pentatonic);
+            if (notes.replaceWithEquivalents(pentatonic) && !pentatonic) { // in case a scale has fuck you intervals
+                chromatic = new CircularLinkedList();
+                corrector = null;
+                chromatic.addAll(natural);
+                if (root.equals(noteBuilder("C", false, false)) || root.equals(noteBuilder("B", false, true))) {
+                    corrector = noteBuilder("B", false, true);
+                    chromatic.reference.setData(corrector);
+                }
+                rootIndex = 0;
+                chromatic.changeReference(rootIndex);
+                indexes = [0];
+                intervals.intervalArray.forEach(interval => {
+                    indexes.push(indexes.slice(-1)[0] + interval);
+                });
+                notes = new CircularLinkedList();
+                indexes.forEach(index => {
+                    notes.add(chromatic.get(index));
+                });
+                notes.replaceWithEquivalents(pentatonic)
+            }
         }
         this.notes = notes;
     }
