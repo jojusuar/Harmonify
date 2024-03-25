@@ -133,6 +133,9 @@ class CircularLinkedList {
                     return true;
                 }
             }
+            if(startSymbol === "N/A"){
+                return true;
+            }
             start = start.getNext();
             adjacent = adjacent.getNext();
         }
