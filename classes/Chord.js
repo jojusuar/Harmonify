@@ -150,7 +150,7 @@ class Chord {
                 }
             }
             else {
-                extendedChordSymbol += "M" + tensionString;
+                extendedChordSymbol += "(maj" + tensionString + ")";
             }
         }
         else {
