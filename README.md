@@ -10,3 +10,4 @@ TO-DO:
 - Chord progression randomizer given n-length
 - Replace enharmonic equivalence calculator with semitone difference calculator
 - Chord name calculator given input notes
+- Chord components calculator given any input chord
