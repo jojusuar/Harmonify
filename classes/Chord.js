@@ -134,8 +134,8 @@ class Chord {
             else if (altered13th) {
                 tensionString += availableSymbols[1] + "(" + availableSymbols[2] + ")";
             }
-            else if (this.major3rd || !this.major7th) {
-                tensionString += availableSymbols.pop();
+            else if (this.major3rd || !this.major7th || (!this.major3rd && this.major7th)) {
+                tensionString += availableSymbols[availableSymbols.length - 1];
             }
         }
 
@@ -150,9 +150,7 @@ class Chord {
                 }
             }
             else {
-                availableSymbols.forEach(symbol => {
-                    extendedChordSymbol += "(add" + symbol + ")";
-                });
+                extendedChordSymbol += "M" + tensionString;
             }
         }
         else {
