@@ -81,6 +81,8 @@ function toggleElements(buttonID, divID) {
         div.style.display = 'none';
     });
     allAvailableTensions = false;
+    selectedNotes = [];
+    selectedNotesString = "<h2> Notes: </h2>";
     clearOutput();
     closePopup();
     let selected = document.getElementById(divID);

@@ -20,9 +20,8 @@
 </style>
 
 <body style="background-color: rgb(39, 40, 41);">
-    <button type="button" id="enharmonicOption" class="option-button"
-        onclick="toggleElements('enharmonicOption', 'EnharmonicButtons')">Enharmonic equivalence
-        calculator</button>
+    <button type="button" id="finderOption" class="option-button"
+        onclick="toggleElements('finderOption', 'finderButtons')">Chord finder</button>
     <button type="button" id="scaleOption" class="option-button"
         onclick="toggleElements('scaleOption', 'ScaleButtons')">Scale
         builder</button>
@@ -42,12 +41,14 @@
     <button type="button" id="flatButton" class="toggleB-button" data-value=FLAT>b (flat)</button>
     <button type="button" id="sharpButton" class="toggleB-button" data-value=SHARP># (sharp)</button>
     <button type="button" id="naturalButton" class="toggleB-button" data-value=NATURAL>natural</button>
-    <div id="EnharmonicButtons" class="hidden">
+    <div id="finderButtons" class="hidden">
         <br>
-        Select a note and its properties from above, then hit
+        From lowest to highest, add at least 3 and up to 7 notes to form a chord
         <br>
-        <button type="button" id="calcButton" class="output-button">Calculate</button>
+        <button type="button" id="addNoteButton" class="output-button">Add note</button>
+        <button type="button" id="deleteNoteButton" class="output-button">Delete note</button>
     </div>
+    <div id="selectedNotes" class="hidden"></div>
     <div id="ScaleButtons" class="hidden">
         <select id="scaleSelector" class="dropdown" onchange="handleScale()">
             <option value="DIATONIC" selected>Diatonic (natural)</option>
@@ -72,7 +73,7 @@
     </div>
     <div id="output"></div>
     <script src="MainOptions.js"></script>
-    <script src="Enharmonic.js"></script>
+    <script src="ChordFinder.js"></script>
     <script src="ScaleBuilder.js"></script>
     <script src="HarmonicCircleBuilder.js"></script>
     <div id="popup" class="popup"></div>
