@@ -43,16 +43,22 @@ class Scale {
             indexes.forEach(index => {
                 notes.add(chromatic.get(index));
             });
-            if (notes.replaceWithEquivalents(pentatonic) && !pentatonic) { // in case a scale has fuck you intervals
+            if (notes.replaceWithEquivalents(pentatonic) && !pentatonic && (root.equals(noteBuilder("C", false, false)) || root.equals(noteBuilder("B", false, true)) || root.equals(noteBuilder("F", false, false)) || root.equals(noteBuilder("E", false, true)))) { // in case a scale has fuck you intervals. I hate this so much
                 chromatic = new CircularLinkedList();
                 corrector = null;
                 chromatic.addAll(natural);
-                if (root.equals(noteBuilder("C", false, false)) || root.equals(noteBuilder("B", false, true))) {
+                if(root.equals(noteBuilder("C", false, false)) || root.equals(noteBuilder("B", false, true))){
                     corrector = noteBuilder("B", false, true);
-                    chromatic.reference.setData(corrector);
                 }
-                rootIndex = 0;
+                if(root.equals(noteBuilder("F", false, false)) || root.equals(noteBuilder("E", false, true))){
+                    corrector = noteBuilder("E", false, true);
+                }
+                rootIndex = chromatic.indexOfObject(root);
+                if (rootIndex < 0) {
+                    rootIndex = chromatic.indexOfObject(root.equivalent);
+                }
                 chromatic.changeReference(rootIndex);
+                chromatic.reference.setData(corrector);
                 indexes = [0];
                 intervals.intervalArray.forEach(interval => {
                     indexes.push(indexes.slice(-1)[0] + interval);
