@@ -115,6 +115,7 @@ class CircularLinkedList {
     }
 
     replaceWithEquivalents(pentatonic) {
+        divOutput.innerHTML = this.toString();
         let rule = ["C", "D", "E", "F", "G", "A", "B"];
         let start = this.reference;
         let adjacent = start.getNext();
