@@ -22,6 +22,7 @@ function deleteNote() {
 
 function findChord() {
     divOutput.innerHTML = foundChord;
+    //TODO
 }
 
 addNoteButton.addEventListener('click', function () {
