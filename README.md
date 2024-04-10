@@ -9,3 +9,4 @@ TO-DO:
 - Chord progression randomizer given n-length
 - Chord name calculator given input notes
 - Chord components calculator given any input chord
+- Add sound playback
