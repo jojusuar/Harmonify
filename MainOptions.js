@@ -75,6 +75,7 @@ function toggleElements(buttonID, divID) {
         div.style.display = 'none';
     });
     allAvailableTensions = false;
+    noteGraph = new Graph(true);
     selectedNotes = [];
     selectedNotesString = "<h2> Notes: </h2>";
     clearOutput();

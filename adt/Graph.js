@@ -30,7 +30,7 @@ class Graph {
     }
 
     remove(element) {
-        this.vertices = this.vertices.filter(item => !item.equals(element));
+        this.vertices = this.vertices.filter(item => !element.equals(item.content));
         for (let vertex2 of this.vertices) {
             vertex2.edges = vertex2.edges.filter(edge => !element.equals(edge.target.content));
         }
@@ -64,7 +64,6 @@ class Graph {
     }
 
     makeConnection(source, target, weight) {
-        let xd = source.content;
         let edge = new Edge(source, target, weight);
         source.edges.push(edge);
         if (!this.edges.has(weight)) {

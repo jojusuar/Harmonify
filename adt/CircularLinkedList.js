@@ -56,7 +56,12 @@ class CircularLinkedList {
         string += start.getData().toString();
         start = start.getNext();
         while (start !== this.reference) {
-            string += " - " + start.getData().toString();
+            if(start.getData() === null){
+                string += " - null";
+            }
+            else{
+                string += " - " + start.getData().toString();
+            }
             start = start.getNext();
         }
         return string;
