@@ -170,7 +170,7 @@ class Chord {
             }
 
         }
-        if (fourth && (minorThird || majorThird)) { //deducing the 11th
+        if (fourth && (second || minorThird || majorThird)) { //deducing the 11th
             fourth = false;
             perfectEleventh = true;
             note11th = note4th;
