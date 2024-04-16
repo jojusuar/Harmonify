@@ -117,7 +117,6 @@ class Chord {
         //some important properties
         let diminished = !second && minorThird && !majorThird && !fourth && diminishedFifth && !perfectFifth && !augmentedFifth && !minorSeventh && !majorSeventh && !flatNinth && !perfectNinth && !perfectEleventh && !flatThirteenth && !sharpThirteenth; //basically, if any interval's tonal distance is not divisible by 3 it breaks the diminished property, and at least minor 3rd and b5 must be present
         let brokenTriad = !second && !minorThird && !majorThird && !fourth;
-        let powerChord = brokenTriad && perfectFifth;
         let has7th = minorSeventh || majorSeventh;
 
         let availableSymbols = [];  //storing all tensions and alterations
@@ -325,9 +324,6 @@ class Chord {
         else if (minorThird) {
             symbol += 'm';
         }
-        else if (powerChord) {
-            symbol += '5';
-        }
 
         let tensionString = ''; //tension calculation
         let breakpoint;
@@ -357,7 +353,7 @@ class Chord {
         }
 
         if (majorSixth) { //6th calculation
-            if (minorThird || powerChord) {
+            if (minorThird) {
                 symbol += '(maj6)';
             }
             else {
@@ -365,15 +361,10 @@ class Chord {
             }
         }
         else if (minorSeventh) { //7th calculation (the stacking of 7th-9th-11th-13th goes here)
-            if (powerChord) {
-                symbol += '(' + tensionString + ')';
-            }
-            else {
-                symbol += tensionString;
-            }
+            symbol += tensionString;
         }
         else if (majorSeventh) {
-            if (minorThird || powerChord) {
+            if (minorThird) {
                 symbol += '(maj' + tensionString + ')';
             }
             else {
@@ -398,7 +389,7 @@ class Chord {
         }
         symbol += alterationString;
 
-        if (brokenTriad && !powerChord) { //if no 3rd or suspension is present
+        if (brokenTriad) { //if no 3rd or suspension is present
             symbol += '(no3)';
         }
 
