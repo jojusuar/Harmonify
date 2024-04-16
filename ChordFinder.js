@@ -23,6 +23,7 @@ function deleteNote() {
 }
 
 function findChord() {
+    clearOutput();
     let rule = ["C", "D", "E", "F", "G", "A", "B"];
     let noteOrder = [noteBuilder("C", false, false), noteBuilder("C", false, true), noteBuilder("D", false, false), noteBuilder("D", false, true), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("F", false, true), noteBuilder("G", false, false), noteBuilder("G", false, true), noteBuilder("A", false, false), noteBuilder("A", false, true), noteBuilder("B", false, false)];
     let pseudoScale = new CircularLinkedList();
