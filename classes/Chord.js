@@ -18,6 +18,7 @@ class Chord {
         let flatNinth = false;
         let perfectNinth = false;
         let sharpNinth = false;
+        let flatEleventh = false;
         let perfectEleventh = false;
         let sharpEleventh = false;
         let flatThirteenth = false;
@@ -37,6 +38,7 @@ class Chord {
         let noteFlat9th;
         let note9th;
         let noteSharp9th;
+        let noteFlat11th;
         let note11th;
         let noteSharp11th;
         let noteFlat13th;
@@ -115,7 +117,6 @@ class Chord {
         }
 
         //some important properties
-        let diminished = !second && minorThird && !majorThird && !fourth && diminishedFifth && !perfectFifth && !augmentedFifth && !minorSeventh && !majorSeventh && !flatNinth && !perfectNinth && !perfectEleventh && !flatThirteenth && !sharpThirteenth; //basically, if any interval's tonal distance is not divisible by 3 it breaks the diminished property, and at least minor 3rd and b5 must be present
         let brokenTriad = !second && !minorThird && !majorThird && !fourth;
         let has7th = minorSeventh || majorSeventh;
 
@@ -140,18 +141,34 @@ class Chord {
                 availableSymbols.push('(9)');
             }
         }
-        if (minorThird && majorThird) { //deducing the sharp 9th
-            minorThird = false;
-            sharpNinth = true;
-            noteSharp9th = noteMinor3rd;
-            let rollback = false;
-            if (availableTensions && getSemitoneDifference(root, noteSharp9th) != 2) {
-                sharpNinth = false;
-                rollback = true;
+        if (minorThird && majorThird) { 
+            if (!diminishedFifth) { //deducing the sharp 9th
+                minorThird = false;
+                sharpNinth = true;
+                noteSharp9th = noteMinor3rd;
+                let rollback = false;
+                if (availableTensions && getSemitoneDifference(root, noteSharp9th) != 2) {
+                    sharpNinth = false;
+                    rollback = true;
+                }
+                if (allTensions && !rollback) {
+                    availableSymbols.push('(#9)');
+                }
             }
-            if (allTensions && !rollback) {
-                availableSymbols.push('(#9)');
+            else { //deducing the flat 11th
+                majorThird = false;
+                flatEleventh = true;
+                noteFlat11th = noteMinor3rd;
+                let rollback = false;
+                if (availableTensions) { //this is an avoid tone, so only to be added if explicitly asked
+                    flatEleventh = false;
+                    rollback = true;
+                }
+                if (allTensions && !rollback) {
+                    availableSymbols.push('(b11)');
+                }
             }
+
         }
         if (fourth && (minorThird || majorThird)) { //deducing the 11th
             fourth = false;
@@ -298,6 +315,9 @@ class Chord {
             if (sharpNinth) {
                 components.push(noteSharp9th);
             }
+            if (flatEleventh) {
+                components.push(noteFlat11th);
+            }
             if (perfectEleventh) {
                 components.push(note11th);
             }
@@ -314,7 +334,20 @@ class Chord {
                 components.push(noteSharp13th);
             }
         }
+        else{
+            flatNinth = false;
+            perfectNinth = false;
+            sharpNinth = false;
+            flatEleventh = false;
+            perfectEleventh = false;
+            sharpEleventh = false;
+            flatThirteenth = false;
+            perfectThirteenth = false;
+            sharpThirteenth = false;
+        }
         this.components = components;
+        let no5th = !diminishedFifth && !perfectFifth && !augmentedFifth;
+        let diminished = !second && minorThird && !majorThird && !fourth && diminishedFifth && !perfectFifth && !augmentedFifth && !minorSeventh && !majorSeventh && !flatNinth && !perfectNinth && !flatEleventh && !perfectEleventh && !flatThirteenth && !sharpThirteenth; //basically, if any interval's tonal distance is not divisible by 3 it breaks the diminished property, and at least minor 3rd and b5 must be present
 
         let symbol = root.toString();
 
@@ -352,7 +385,7 @@ class Chord {
             alterationString += availableSymbols[i];
         }
 
-        if (majorSixth) { //6th calculation
+        if (majorSixth && !diminished) { //6th calculation
             if (minorThird) {
                 symbol += '(maj6)';
             }
@@ -391,6 +424,9 @@ class Chord {
 
         if (brokenTriad) { //if no 3rd or suspension is present
             symbol += '(no3)';
+        }
+        if (no5th){ //if no 5th is present
+            symbol += '(no5)';
         }
 
         this.symbol = symbol;
