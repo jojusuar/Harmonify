@@ -13,6 +13,9 @@ class Intervals{
         if(name==="HARMONIC"){
             intervalArray=[2,2,1,3,1,2,1];
         }
+        if(name==="BYZANTINE"){
+            intervalArray=[1,3,1,2,1,3,1];
+        }
         if(name==="MELODIC_ASC"){
             intervalArray=[2,2,2,2,1,2,1];
         }
