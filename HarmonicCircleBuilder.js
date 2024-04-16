@@ -10,7 +10,7 @@ function printHarmonicCircle() {
     let modeIndex = modeCB.selectedIndex;
     let modeChoice = modeCB[modeIndex];
     let myScale = new Scale(noteBuilder(noteValue, flat, sharp), new Intervals(choice.value, parseInt(modeChoice.value)), pentatonicFlag);
-    let myHarmonicCircle = new HarmonicCircle(myScale, allAvailableTensions);
+    let myHarmonicCircle = new HarmonicCircle(myScale, allAvailableTensions, allAvailableTensions);
     let currentChord = myHarmonicCircle.chords.reference;
     let formattedComponents = formatComponents(currentChord.getData());
     let htmlCode = '<button class="chord-button" onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';

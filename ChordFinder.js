@@ -42,32 +42,46 @@ function findChord() {
             notesInBetween = 7 - notesInBetween;
         }
         notesInBetween = Math.abs(notesInBetween) - 1;
-        if (notesInBetween > 0) {
-            fillWithNull(start, adjacent, notesInBetween);
-        }
+        fillWithNull(pseudoScale, start, adjacent, notesInBetween);
         start = adjacent;
         adjacent = start.next;
     }
-
+    let dummy = new Scale();
+    dummy.notes = pseudoScale;
     let possibleRoots = findPossibleRoots();
-    let possibleChords = [];
-
-    divOutput.innerHTML = noteGraph.toString();
-    divOutput.innerHTML += '<br> Possible roots: ' + possibleRoots;
-    divOutput.innerHTML += '<br> Truncated scale: ' + pseudoScale;
+    divOutput.innerHTML += '<h2>Possible chords: </h2>';
+    for (let root of possibleRoots) {
+        let chord = new Chord(root, dummy, true, false);
+        divOutput.innerHTML += '<button class="chord-button"><h1>' + chord.toString() + '</h1></button>';
+    }
+    let chordButtons = document.querySelectorAll('.chord-button');
+    chordButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            chordButtons.forEach(btn => {
+                btn.style.backgroundColor = 'rgb(39, 40, 41)';
+            });
+            button.classList.add('selected');
+            button.style.backgroundColor = 'rgb(70, 70, 70)';
+        });
+    });
 }
 
-function fillWithNull(node1, node2, count) {
+function fillWithNull(list, node1, node2, count) {
+    if (count < 1) {
+        return;
+    }
     let nullNode = new DoubleLinkNode();
     nullNode.setData(null);
     nullNode.setPrevious(node1);
     node1.setNext(nullNode);
+    list.size++;
     if (count > 1) {
         for (let i = 0; i < count - 1; i++) {
             let current = new DoubleLinkNode();
             current.setData(null);
             current.setPrevious(nullNode);
             nullNode.setNext(current);
+            list.size++;
             nullNode = current;
         }
     }
@@ -91,7 +105,17 @@ function findPossibleRoots() {
         }
         if (intervals.has(8)) {
             for (let interval of intervals.get(8)) {
-                possibleRoots.push(interval.source.content);
+                let augmentedFifth = interval.target.content;
+                if (intervals.has(3) && intervals.get(3).length > 0) { //if still nothing, triads can't be formed. proceed by searching for thirds
+                    for (let interval2 of intervals.get(3)) {
+                        if (augmentedFifth.equals(interval2.source.content)) {
+                            possibleRoots.push(augmentedFifth); //A minor 3rd and augmented 5th triad is an inversion of a major triad where the 5th is the root
+                        }
+                    }
+                }
+                else {
+                    possibleRoots.push(interval.source.content);
+                }
             }
         }
     }
@@ -118,6 +142,12 @@ function findPossibleRoots() {
     }, []);
     return possibleRoots;
 }
+
+function clearWarning() {
+    while (divWarning.firstChild) {
+        divWarning.removeChild(divWarning.firstChild);
+    }
+};
 
 addNoteButton.addEventListener('click', function () {
     clearWarning();
@@ -182,9 +212,3 @@ deleteNoteButton.addEventListener('click', function () {
     }
     displaySelectedNotes();
 });
-
-function clearWarning() {
-    while (divWarning.firstChild) {
-        divWarning.removeChild(divWarning.firstChild);
-    }
-};

@@ -56,10 +56,10 @@ class CircularLinkedList {
         string += start.getData().toString();
         start = start.getNext();
         while (start !== this.reference) {
-            if(start.getData() === null){
+            if (start.getData() === null) {
                 string += " - null";
             }
-            else{
+            else {
                 string += " - " + start.getData().toString();
             }
             start = start.getNext();
@@ -76,7 +76,8 @@ class CircularLinkedList {
         temp = this.reference.getNext();
         index++;
         while (temp !== this.reference) {
-            if (temp.getData().equals(element)) {
+            let current = temp.getData();
+            if (current != null && current.equals(element)) {
                 return index;
             }
             temp = temp.getNext();
@@ -139,12 +140,22 @@ class CircularLinkedList {
                     return true;
                 }
             }
-            if(startSymbol === "N/A"){
+            if (startSymbol === "N/A") {
                 return true;
             }
             start = start.getNext();
             adjacent = adjacent.getNext();
         }
         return false;
+    }
+
+    toArray() {
+        let array = [];
+        let current = this.reference;
+        for (let i = 0; i < this.size; i++) {
+            array.push(current.getData());
+            current = current.getNext();
+        }
+        return array;
     }
 }
