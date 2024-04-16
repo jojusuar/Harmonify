@@ -52,7 +52,12 @@ class Note {
         }
     }
     equals(element) {
-        return this.symbol === element.symbol && this.flat === element.flat && this.sharp === element.sharp;
+        if(this == null || element == null){
+            return false;
+        }
+        if(this.symbol === element.symbol && this.flat === element.flat && this.sharp === element.sharp){
+            return true;
+        }
     }
 
     toString() {
@@ -79,6 +84,9 @@ function noteBuilder(symbol, flat, sharp) {
 }
 
 function getSemitoneDifference(note1, note2) {
+    if(note1 == null || note2 == null){
+        return null;
+    }
     let allNotes = new CircularLinkedList();
     let notesArray = [noteBuilder("C", false, false), noteBuilder("C", false, true), noteBuilder("D", false, false), noteBuilder("D", false, true), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("F", false, true), noteBuilder("G", false, false), noteBuilder("G", false, true), noteBuilder("A", false, false), noteBuilder("A", false, true), noteBuilder("B", false, false)];
     allNotes.addAll(notesArray);
