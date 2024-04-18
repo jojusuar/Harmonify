@@ -8,14 +8,18 @@ class Scale {
             for (let interval of intervals.intervalArray) {
                 notes.push(getNext(notes[notes.length - 1], interval));
             }
-            this.notes = notes;
+            let notesCircle = new CircularLinkedList();
+            notesCircle.addAll(notes);
+            this.notes = notesCircle;
         }
     }
 
     toString() {
-        let string = this.notes[0].toString();
-        for (let i = 1; i < this.notes.length; i++) {
-            string += ' - ' + this.notes[i].toString();
+        let current = this.notes.reference;
+        let string = current.data.toString();
+        for (let i = 1; i < this.notes.size; i++) {
+            string += ' - ' + current.data.toString();
+            current = current.getNext();
         }
         return string;
     }

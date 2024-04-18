@@ -86,6 +86,6 @@ function toggleElements(buttonID, divID) {
         scaleDiv.innerHTML = scaleDropdowns + '<br> Select a root note, a scale and a greek mode from above, then hit the build button to generate the scale <br> <button type="button" id="scaleButton" class="output-button" onclick="printScale()">Build scale</button>';
     }
     else if (buttonID === 'harmonicCircleOption') {
-        scaleDiv.innerHTML = scaleDropdownsForHarmonicCircle + '<br> Select a tonic chord, a scale and a greek mode from above, then hit the build button to generate the harmonic circle <br> <button type="button" id="harmonicCircleButton" class="output-button" onclick="printHarmonicCircle()">Build harmonic circle</button> <br> Click on any chord to reveal its components <br> Show all available tensions <label class="switch"><input type="checkbox" onclick="toggleTensions()"><span class="slider round"></span></label>';
+        scaleDiv.innerHTML = scaleDropdownsForHarmonicCircle + '<br> Select a tonic chord, a scale and a mode from above, then hit the build button to generate the harmonic circle <br> <button type="button" id="harmonicCircleButton" class="output-button" onclick="printHarmonicCircle()">Build harmonic circle</button> <br> Click on any chord to reveal its components <br> Show all available tensions <label class="switch"><input type="checkbox" onclick="toggleTensions()"><span class="slider round"></span></label>';
     }
 };
