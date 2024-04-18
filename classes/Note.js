@@ -63,10 +63,10 @@ class Note {
     toString() {
         let string = this.symbol;
         if (this.flat) {
-            string += "b";
+            string += "♭";
         }
         else if (this.sharp) {
-            string += "#";
+            string += "♯";
         }
         return string;
     }
