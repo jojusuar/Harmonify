@@ -125,7 +125,7 @@ class Chord {
             availableSymbols.push('(7)');
         }
         if (flatNinth && allTensions && !stopFlat9th) {
-            availableSymbols.push('(b9)');
+            availableSymbols.push('(♭9)');
         }
 
         if (second && (minorThird || majorThird)) { //deducing the 9th
@@ -152,7 +152,7 @@ class Chord {
                     rollback = true;
                 }
                 if (allTensions && !rollback) {
-                    availableSymbols.push('(#9)');
+                    availableSymbols.push('(♯9)');
                 }
             }
             else { //deducing the flat 11th
@@ -165,7 +165,7 @@ class Chord {
                     rollback = true;
                 }
                 if (allTensions && !rollback) {
-                    availableSymbols.push('(b11)');
+                    availableSymbols.push('(♭11)');
                 }
             }
 
@@ -205,7 +205,7 @@ class Chord {
                 }
             }
             if (allTensions && !rollback) {
-                availableSymbols.push('(#11)');
+                availableSymbols.push('(♯11)');
             }
         }
         if (augmentedFifth && (diminishedFifth || perfectFifth)) { //deducing  the flat 13th
@@ -224,7 +224,7 @@ class Chord {
                 }
             }
             if (allTensions && !rollback) {
-                availableSymbols.push('(b13)');
+                availableSymbols.push('(♭13)');
             }
         }
         if (majorSixth && (minorSeventh || majorSeventh)) { //deducing the 13th
@@ -270,7 +270,7 @@ class Chord {
                 }
             }
             if (allTensions && !rollback) {
-                availableSymbols.push('(#13)');
+                availableSymbols.push('(♯13)');
             }
         }
 
@@ -415,10 +415,10 @@ class Chord {
         }
 
         if (diminishedFifth && !diminished) { //alterations calculation (everything after breaking the 7th-9th-11th-13th order also goes here)
-            symbol += '(b5)';
+            symbol += '(♭5)';
         }
         else if (augmentedFifth) {
-            symbol += '(#5)';
+            symbol += '(♯5)';
         }
         symbol += alterationString;
 

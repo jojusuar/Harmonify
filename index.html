@@ -41,9 +41,12 @@
     <button type="button" id="AButton" class="toggleA-button" data-value="A">A</button>
     <button type="button" id="BButton" class="toggleA-button" data-value="B">B</button>
     <br>
-    <button type="button" id="flatButton" class="toggleB-button" data-value=FLAT>b (flat)</button>
-    <button type="button" id="sharpButton" class="toggleB-button" data-value=SHARP># (sharp)</button>
-    <button type="button" id="naturalButton" class="toggleB-button" data-value=NATURAL>natural</button>
+    <button type="button" id="doubleFlatButton" class="toggleB-button" data-value=DOUBLE_FLAT>𝄫</button>
+    <button type="button" id="flatButton" class="toggleB-button" data-value=FLAT>♭</button>
+    <button type="button" id="naturalButton" class="toggleB-button" data-value=NATURAL>♮</button>
+    <button type="button" id="sharpButton" class="toggleB-button" data-value=SHARP>♯</button>
+    <button type="button" id="doubleSharpButton" class="toggleB-button" data-value=DOUBLE_SHARP>𝄪</button>
+    
     <div id="finderButtons" class="hidden">
         <br>
         Add at least 3 and up to 7 notes to form a chord
@@ -76,7 +79,7 @@
             <option value=6>VII. Locrian</option>
         </select>
         <br>
-        Select a root note, a scale and a greek mode from above, then hit the build button to generate the scale
+        Select a root note, a scale and a mode from above, then hit the build button to generate the scale
         <br>
         <button type="button" id="scaleButton" class="output-button" onclick="printScale()">Build scale</button>
     </div>
