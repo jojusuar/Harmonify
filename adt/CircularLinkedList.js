@@ -120,35 +120,6 @@ class CircularLinkedList {
         }
     }
 
-    replaceWithEquivalents(pentatonic) {
-        divOutput.innerHTML = this.toString();
-        let rule = ["C", "D", "E", "F", "G", "A", "B"];
-        let start = this.reference;
-        let adjacent = start.getNext();
-        for (let i = 0; i <= this.size; i++) {
-            let startSymbol = start.getData().symbol;
-            let adjacentSymbol = adjacent.getData().symbol;
-            let diff = rule.indexOf(adjacentSymbol) - rule.indexOf(startSymbol);
-            if (diff === 0) {
-                adjacent.setData(adjacent.getData().equivalent);
-            }
-            else if (diff > 1 || diff === -5) {
-                if ((adjacentSymbol === "C" || adjacentSymbol === "F") && !pentatonic) {
-                    adjacent.setData(adjacent.getData().equivalent);
-                }
-                else {
-                    return true;
-                }
-            }
-            if (startSymbol === "N/A") {
-                return true;
-            }
-            start = start.getNext();
-            adjacent = adjacent.getNext();
-        }
-        return false;
-    }
-
     toArray() {
         let array = [];
         let current = this.reference;
