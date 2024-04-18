@@ -8,7 +8,7 @@ function printHarmonicCircle() {
     let choiceIndex = scaleCB.selectedIndex;
     let choice = scaleCB[choiceIndex];
     let modeIndex = modeCB.selectedIndex;
-    let myScale = new Scale(noteBuilder(noteValue, flat, sharp), new Intervals(choice.value, modeIndex));
+    let myScale = new Scale(new Note(noteValue, flat, sharp, false, false), new Intervals(choice.value, modeIndex));
     let myHarmonicCircle = new HarmonicCircle(myScale, allAvailableTensions, allAvailableTensions);
     let currentChord = myHarmonicCircle.chords.reference;
     let formattedComponents = formatComponents(currentChord.getData());
