@@ -17,6 +17,7 @@ class Scale {
     toString() {
         let current = this.notes.reference;
         let string = current.data.toString();
+        current = current.getNext();
         for (let i = 1; i < this.notes.size; i++) {
             string += ' - ' + current.data.toString();
             current = current.getNext();
