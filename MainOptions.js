@@ -36,6 +36,9 @@ noteButtons.forEach(button => {
     });
 });
 alterButtons.forEach(button => {
+    if (button.id == "doubleFlatButton" || button.id == "doubleSharpButton") {
+        button.style.display = 'none';
+    }
     button.addEventListener('click', () => {
         alterButtons.forEach(btn => {
             btn.classList.remove('selected');
@@ -81,15 +84,33 @@ function toggleElements(buttonID, divID) {
     noteGraph = new Graph(true);
     selectedNotes = [];
     selectedNotesString = "<h2> Notes: </h2>";
+    clearWarning();
     clearOutput();
     closePopup();
     let selected = document.getElementById(divID);
     selected.style.display = 'block';
     if (buttonID === 'scaleOption') {
         scaleDiv.innerHTML = scaleDropdowns + '<br> Select a root note, a scale and a greek mode from above, then hit the build button to generate the scale <br> <button type="button" id="scaleButton" class="output-button" onclick="printScale()">Build scale</button>';
+        alterButtons.forEach(button => {
+            if (button.id == "doubleFlatButton" || button.id == "doubleSharpButton") {
+                button.style.display = 'none';
+            }
+        });
     }
     else if (buttonID === 'harmonicCircleOption') {
         scaleDiv.innerHTML = scaleDropdownsForHarmonicCircle + '<br> Select a tonic chord, a scale and a mode from above, then hit the build button to generate the harmonic circle <br> <button type="button" id="harmonicCircleButton" class="output-button" onclick="printHarmonicCircle()">Build harmonic circle</button> <br> Click on any chord to reveal its components <br> Show all available tensions <label class="switch"><input type="checkbox" onclick="toggleTensions()"><span class="slider round"></span></label>';
+        alterButtons.forEach(button => {
+            if (button.id == "doubleFlatButton" || button.id == "doubleSharpButton") {
+                button.style.display = 'none';
+            }
+        });
+    }
+    else if (buttonID === 'finderOption') {
+        alterButtons.forEach(button => {
+            if (button.id == "doubleFlatButton" || button.id == "doubleSharpButton") {
+                button.style.display = 'inline';
+            }
+        });
     }
 };
 
