@@ -22,6 +22,8 @@ let alterButtons = document.querySelectorAll('.toggleB-button');
 let noteValue = "C";
 let flat = false;
 let sharp = false;
+let doubleFlat = false;
+let doubleSharp = false;
 noteButtons.forEach(button => {
     button.addEventListener('click', () => {
         noteButtons.forEach(btn => {
@@ -42,17 +44,18 @@ alterButtons.forEach(button => {
         button.classList.add('selected');
         button.style.backgroundColor = 'rgb(70, 70, 70)';
         let alterValue = button.getAttribute('data-value');
+        resetAlter();
         if (alterValue === 'FLAT') {
             flat = true;
-            sharp = false;
         }
         else if (alterValue === 'SHARP') {
-            flat = false;
             sharp = true;
         }
-        else {
-            flat = false;
-            sharp = false;
+        else if (alterValue === 'DOUBLE_FLAT') {
+            doubleFlat = true;
+        }
+        else if (alterValue === 'DOUBLE_SHARP') {
+            doubleSharp = true;
         }
     });
 });
@@ -89,3 +92,10 @@ function toggleElements(buttonID, divID) {
         scaleDiv.innerHTML = scaleDropdownsForHarmonicCircle + '<br> Select a tonic chord, a scale and a mode from above, then hit the build button to generate the harmonic circle <br> <button type="button" id="harmonicCircleButton" class="output-button" onclick="printHarmonicCircle()">Build harmonic circle</button> <br> Click on any chord to reveal its components <br> Show all available tensions <label class="switch"><input type="checkbox" onclick="toggleTensions()"><span class="slider round"></span></label>';
     }
 };
+
+function resetAlter() {
+    flat = false;
+    sharp = false;
+    doubleFlat = false;
+    doubleSharp = false;
+}

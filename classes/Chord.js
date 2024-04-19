@@ -177,9 +177,7 @@ class Chord {
                 }
             }
         }
-
-        //CONNECT TO THE REST OF THE CODE
-
+        
         let stopFlat9th = false;
         if (availableTensions && getSemitoneDifference(root, noteFlat9th) != 2) {
             flatNinth = false;
