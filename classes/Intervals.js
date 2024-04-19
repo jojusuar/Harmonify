@@ -7,10 +7,6 @@ class Intervals {
             intervalArray = [2, 2, 1, 2, 2, 2, 1];
             modeArray = ['I. Ionian (major)', 'II. Dorian', 'III. Phrygian', 'IV. Lydian', 'V. Mixolydian', 'VI. Aeolian (minor)', 'VII. Locrian'];
         }
-        if (name === "PENTATONIC") {
-            intervalArray = [2, 2, 3, 2, 3];
-            modeArray = ['Pentatonic major', 'Suspended', 'Blues minor', 'Blues major', 'Pentatonic minor'];
-        }
         if (name === "MELODIC_ASC") {
             intervalArray = [2, 1, 2, 2, 2, 2, 1];
             modeArray = ['I. Jazz minor', 'II. Dorian ♭2', 'III. Lydian augmented', 'IV. Acoustic (Lydian dominant)', 'V. Aeolian dominant', 'VI. Half-diminished', 'VII. Altered dominant'];
