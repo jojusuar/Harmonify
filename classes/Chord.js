@@ -544,7 +544,7 @@ class Chord {
                 }
             }
         }
-        return vector;
+        return '<'+vector+'>';
     }
 }
 
