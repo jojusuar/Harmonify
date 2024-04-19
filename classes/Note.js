@@ -49,6 +49,9 @@ equivalencyMap.set(10, [new Note("A", false, true, false, false), new Note("B", 
 equivalencyMap.set(11, [new Note("B", false, false, false, false), new Note("C", true, false, false, false), new Note("A", false, false, false, true)]);
 
 function getSemitoneDifference(note1, note2) {
+    let rule = ["C", "D", "E", "F", "G", "A", "B"];
+    let circle = new CircularLinkedList();
+    circle.addAll(rule);
     if (note1 == null || note2 == null) {
         return null;
     }
@@ -90,16 +93,16 @@ function equivalents(note1) {
 }
 
 function getNext(note, distance) {
-    if (distance > 4 || distance < 1) { //at most, a note can only have the next be 4 semitones apart to stick to the note rule
-        return null;
-    }
     let rule = ["C", "D", "E", "F", "G", "A", "B"];
     let circle = new CircularLinkedList();
     circle.addAll(rule);
+    if (distance > 4 || distance < 1) { //at most, a note can only have the next be 4 semitones apart to stick to the note rule
+        return null;
+    }
     let expectedNext;
     let current = circle.reference;
     for (let i = 0; i < circle.size; i++) {
-        if(current.data == note.symbol){
+        if (current.data == note.symbol) {
             expectedNext = current.getNext().data;
             break;
         }
@@ -108,17 +111,89 @@ function getNext(note, distance) {
     for (let position of equivalencyMap.keys()) {
         for (let note2 of equivalencyMap.get(position)) {
             if (note.equals(note2)) {
-                let position2 = parseInt(position)+distance;
-                if(position2 > 11){
+                let position2 = parseInt(position) + distance;
+                if (position2 > 11) {
                     position2 = position2 - 12;
                 }
-                for(let candidate of equivalencyMap.get(position2)){
-                    if(candidate.symbol == expectedNext){
+                for (let candidate of equivalencyMap.get(position2)) {
+                    if (candidate.symbol == expectedNext) {
                         return candidate;
                     }
                 }
                 return null;
             }
+        }
+    }
+    return null;
+}
+
+let intervalMap = new Map();
+intervalMap.set(0, ["UNISON", "DOUBLY_DIMINISHED_SECOND"]);
+intervalMap.set(1, ["DIMINISHED_SECOND", "DOUBLY_DIMINISHED_THIRD"]);
+intervalMap.set(2, ["SECOND", "DIMINISHED_THIRD"]);
+intervalMap.set(3, ["AUGMENTED_SECOND", "MINOR_THIRD", "DOUBLY_DIMINISHED_FOURTH"]);
+intervalMap.set(4, ["DOUBLY_AUGMENTED_SECOND", "MAJOR_THIRD", "DIMINISHED_FOURTH"]);
+intervalMap.set(5, ["AUGMENTED_THIRD", "FOURTH", "DOUBLY_DIMINISHED_FIFTH"]);
+intervalMap.set(6, ["DOUBLY_AUGMENTED_THIRD", "AUGMENTED_FOURTH", "DIMINISHED_FIFTH", "DOUBLY_DIMINISHED_SIXTH"]);
+intervalMap.set(7, ["DOUBLY_AUGMENTED_FOURTH", "FIFTH", "DIMINISHED_SIXTH"]);
+intervalMap.set(8, ["AUGMENTED_FIFTH", "MINOR_SIXTH", "DOUBLY_DIMINISHED_SEVENTH"]);
+intervalMap.set(9, ["DOUBLY_AUGMENTED_FIFTH", "MAJOR_SIXTH", "DIMINISHED_SEVENTH"]);
+intervalMap.set(10, ["AUGMENTED_SIXTH", "MINOR_SEVENTH"]);
+intervalMap.set(11, ["DOUBLY_AUGMENTED_SIXTH", "MAJOR_SEVENTH"]);
+
+function getInterval(note1, note2) {
+    let rule = ["C", "D", "E", "F", "G", "A", "B"];
+    let circle = new CircularLinkedList();
+    circle.addAll(rule);
+    if (note1 == null || note2 == null || note1.symbol == note2.symbol) {
+        return null;
+    }
+    let found1 = false;
+    let counter = 0;
+    let current = circle.reference;
+    while (true) {
+        if (found1) {
+            counter++;
+            if (current.data == note2.symbol) {
+                break;
+            }
+        }
+        else if (current.data == note1.symbol) {
+            found1 = true;
+        }
+        current = current.getNext();
+    }
+    let expected;
+    switch (counter) {
+        case 1: {
+            expected = "SECOND";
+            break;
+        }
+        case 2: {
+            expected = "THIRD";
+            break;
+        }
+        case 3: {
+            expected = "FOURTH";
+            break;
+        }
+        case 4: {
+            expected = "FIFTH";
+            break;
+        }
+        case 5: {
+            expected = "SIXTH";
+            break;
+        }
+        case 6: {
+            expected = "SEVENTH";
+            break;
+        }
+    }
+    let tonalDistance = getSemitoneDifference(note1, note2);
+    for(let candidate of intervalMap.get(tonalDistance)){
+        if(candidate.includes(expected)){
+            return candidate;
         }
     }
     return null;

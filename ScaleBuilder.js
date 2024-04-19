@@ -19,9 +19,7 @@ function printScale() {
     let choiceIndex = scaleCB.selectedIndex;
     let choice = scaleCB[choiceIndex];
     let modeIndex = modeCB.selectedIndex;
-    let modeChoice = modeCB[modeIndex];
     let intervals = new Intervals(choice.value, modeIndex);
     let myScale = new Scale(new Note(noteValue, flat, sharp), intervals);
-    let string = "";
     divOutput.innerHTML = '<h1>' + myScale.toString() + '</h1>';
 }
