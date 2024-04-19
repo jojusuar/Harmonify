@@ -38,17 +38,6 @@ body {
   margin: 4px;
 }
 
-.toggleC-button {
-  display: none;
-  color: rgb(215, 215, 228);
-  border-radius: 10px;
-  background-color: rgb(39, 40, 41);
-  border: 0px solid rgb(102, 102, 102);
-  font-size: 35px;
-  width: 45px;
-  margin: 4px;
-}
-
 .output-button {
   color: rgb(215, 215, 228);
   border-radius: 10px;

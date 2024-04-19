@@ -12,6 +12,7 @@ class Chord {
         let diminishedFifth = false;
         let perfectFifth = false;
         let augmentedFifth = false;
+        let minorSixth = false;
         let majorSixth = false;
         let minorSeventh = false;
         let majorSeventh = false;
@@ -32,6 +33,7 @@ class Chord {
         let noteDiminished5th;
         let note5th;
         let noteAugmented5th;
+        let noteMinor6th;
         let noteMajor6th;
         let noteMinor7th;
         let noteMajor7th;
@@ -155,8 +157,8 @@ class Chord {
                         break;
                     }
                     case 8: {
-                        flatThirteenth = true;
-                        noteFlat13th = note;
+                        minorSixth = true;
+                        noteMinor6th = note;
                         break;
                     }
                     case 9: {
@@ -177,7 +179,7 @@ class Chord {
                 }
             }
         }
-        
+
         let stopFlat9th = false;
         if (availableTensions && getSemitoneDifference(root, noteFlat9th) != 2) {
             flatNinth = false;
@@ -286,11 +288,15 @@ class Chord {
                 availableSymbols.push('(♯11)');
             }
         }
-        if (flatThirteenth || (augmentedFifth && (diminishedFifth || perfectFifth))) { //deducing  the flat 13th
-            if (!flatThirteenth) {
+        if ((augmentedFifth && (diminishedFifth || perfectFifth)) || (minorSixth && majorSixth) || (minorSixth && has7th)) { //deducing  the flat 13th
+            flatThirteenth = true;
+            if (augmentedFifth) {
                 augmentedFifth = false;
-                flatThirteenth = true;
                 noteFlat13th = noteAugmented5th;
+            }
+            if (minorSixth) {
+                minorSixth = false;
+                noteFlat13th = noteMinor6th;
             }
             let rollback = false;
             if (availableTensions) {
@@ -380,6 +386,9 @@ class Chord {
         if (augmentedFifth) {
             components.push(noteAugmented5th);
         }
+        if (minorSixth) {
+            components.push(noteMinor6th);
+        }
         if (majorSixth) {
             components.push(noteMajor6th);
         }
@@ -468,14 +477,8 @@ class Chord {
         for (let i = breakpoint; i < availableSymbols.length; i++) {
             alterationString += availableSymbols[i];
         }
-
         if (majorSixth && !diminished) { //6th calculation
-            if (minorThird) {
-                symbol += '(maj6)';
-            }
-            else {
-                symbol += 'maj6';
-            }
+            symbol += '6';
         }
         else if (minorSeventh) { //7th calculation (the stacking of 7th-9th-11th-13th goes here)
             symbol += tensionString;
@@ -503,6 +506,9 @@ class Chord {
         }
         else if (augmentedFifth) {
             symbol += '(♯5)';
+        }
+        if (minorSixth) {
+            symbol += '(♭6)';
         }
         symbol += alterationString;
 
@@ -556,11 +562,11 @@ function analyze5th(intervals) {
             break;
         }
     }
-    if (interval != null && intervalMap.get(8).includes(interval)) { 
+    if (interval != null && intervalMap.get(8).includes(interval)) {
         intervals.splice(foundAt, 1);
         return [2, note];
     }
-    else if (interval != null && intervalMap.get(7).includes(interval)) { 
+    else if (interval != null && intervalMap.get(7).includes(interval)) {
         intervals.splice(foundAt, 1);
         return [1, note];
     }
