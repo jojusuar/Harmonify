@@ -556,15 +556,15 @@ function analyze5th(intervals) {
             break;
         }
     }
-    if (interval != null && intervalMap.get(8).includes(interval)) { //looking directly for the major 3rd interval
+    if (interval != null && intervalMap.get(8).includes(interval)) { 
         intervals.splice(foundAt, 1);
         return [2, note];
     }
-    else if (interval != null && intervalMap.get(7).includes(interval)) { //looking directly for the minor 3rd interval
+    else if (interval != null && intervalMap.get(7).includes(interval)) { 
         intervals.splice(foundAt, 1);
         return [1, note];
     }
-    else if (interval != null && intervalMap.get(6).includes(interval)) { //looking directly for the minor 3rd interval
+    else if (interval != null && intervalMap.get(6).includes(interval)) {
         intervals.splice(foundAt, 1);
         return [0, note];
     }
