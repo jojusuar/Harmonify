@@ -45,70 +45,140 @@ class Chord {
         let note13th;
         let noteSharp13th;
 
+        let intervals = [];
         for (let i = 1; i < components.length; i++) {
-            let note = components[i];
-            let distance = getSemitoneDifference(root, note);
-            switch (distance) { //calculating the interval formed from the root to each note
-                case null: {
-                    break;
+            let current = components[i];
+            let tuple = { interval: getInterval(root, current), note: current };
+            intervals.push(tuple);
+        }
+        components = [root];
+
+        let thirdAnalysis = analyze3rd(intervals);
+
+        if (thirdAnalysis[0] == 1) {
+            majorThird = true;
+            noteMajor3rd = thirdAnalysis[1];
+        }
+        else if (thirdAnalysis[0] == 0) {
+            minorThird = true;
+            noteMinor3rd = thirdAnalysis[1];
+        }
+        else { //this decides if the intervals just suck or the chord actually IS suspended
+            let quality = any3rd(intervals);
+            if (quality[0] == 0) {
+                minorThird = true;
+                noteMinor3rd = quality[1];
+            }
+            else if (quality[0] == 1) {
+                majorThird = true;
+                noteMajor3rd = quality[1];
+            }
+        }
+
+        let fifthAnalysis = analyze5th(intervals);
+
+        if (fifthAnalysis[0] == 2) {
+            augmentedFifth = true;
+            noteAugmented5th = fifthAnalysis[1];
+        }
+        else if (fifthAnalysis[0] == 1) {
+            perfectFifth = true;
+            note5th = fifthAnalysis[1];
+        }
+        else if (fifthAnalysis[0] == 1) {
+            perfectFifth = true;
+            note5th = fifthAnalysis[1];
+        }
+        else if (fifthAnalysis[0] == 0) {
+            diminishedFifth = true;
+            noteDiminished5th = fifthAnalysis[1];
+        }
+        else {
+            let quality = any5th(intervals);
+            if (quality[0] == 0) {
+                diminishedFifth = true;
+                noteDiminished5th = quality[1];
+            }
+            else if (quality[0] == 1) {
+                perfectFifth = true;
+                note5th = quality[1];
+            }
+            else if (quality[0] == 2) {
+                augmentedFifth = true;
+                noteAugmented5th = quality[1];
+            }
+        }
+
+        for (let tuple of intervals) {
+            let interval = tuple.interval;
+            let note = tuple.note;
+            let tonalDistance = null;
+            if (interval != null) {
+                for (let key of intervalMap.keys()) {
+                    if (intervalMap.get(key).includes(interval)) {
+                        tonalDistance = parseInt(key);
+                        break;
+                    }
                 }
-                case 1: {
-                    flatNinth = true;
-                    noteFlat9th = note;
-                    break;
-                }
-                case 2: {
-                    second = true;
-                    note2nd = note;
-                    break;
-                }
-                case 3: {
-                    minorThird = true;
-                    noteMinor3rd = note;
-                    break;
-                }
-                case 4: {
-                    majorThird = true;
-                    noteMajor3rd = note;
-                    break;
-                }
-                case 5: {
-                    fourth = true;
-                    note4th = note;
-                    break;
-                }
-                case 6: {
-                    diminishedFifth = true;
-                    noteDiminished5th = note;
-                    break;
-                }
-                case 7: {
-                    perfectFifth = true;
-                    note5th = note;
-                    break;
-                }
-                case 8: {
-                    augmentedFifth = true;
-                    noteAugmented5th = note;
-                    break;
-                }
-                case 9: {
-                    majorSixth = true;
-                    noteMajor6th = note;
-                    break;
-                }
-                case 10: {
-                    minorSeventh = true;
-                    noteMinor7th = note;
-                    break;
-                }
-                case 11: {
-                    majorSeventh = true;
-                    noteMajor7th = note;
-                    break;
+                switch (tonalDistance) {
+                    case null: {
+                        break;
+                    }
+                    case 1: {
+                        flatNinth = true;
+                        noteFlat9th = note;
+                        break;
+                    }
+                    case 2: {
+                        second = true;
+                        note2nd = note;
+                        break;
+                    }
+                    case 3: {
+                        sharpNinth = true;
+                        noteSharp9th = note;
+                        break;
+                    }
+                    case 4: {
+                        flatEleventh = true;
+                        noteFlat11th = note;
+                        break;
+                    }
+                    case 5: {
+                        fourth = true;
+                        note4th = note;
+                        break;
+                    }
+                    case 6: {
+                        sharpEleventh = true;
+                        noteSharp11th = note;
+                        break;
+                    }
+                    case 8: {
+                        flatThirteenth = true;
+                        noteFlat13th = note;
+                        break;
+                    }
+                    case 9: {
+                        majorSixth = true;
+                        noteMajor6th = note;
+                        break;
+                    }
+                    case 10: {
+                        minorSeventh = true;
+                        noteMinor7th = note;
+                        break;
+                    }
+                    case 11: {
+                        majorSeventh = true;
+                        noteMajor7th = note;
+                        break;
+                    }
                 }
             }
         }
+
+        //CONNECT TO THE REST OF THE CODE
 
         let stopFlat9th = false;
         if (availableTensions && getSemitoneDifference(root, noteFlat9th) != 2) {
@@ -128,10 +198,12 @@ class Chord {
             availableSymbols.push('(♭9)');
         }
 
-        if (second && (minorThird || majorThird)) { //deducing the 9th
-            second = false;
-            perfectNinth = true;
-            note9th = note2nd;
+        if (perfectNinth || (second && (minorThird || majorThird))) { //deducing the 9th
+            if (!perfectNinth) {
+                second = false;
+                perfectNinth = true;
+                note9th = note2nd;
+            }
             let rollback = false;
             if (availableTensions && getSemitoneDifference(root, note9th) != 2) {
                 perfectNinth = false;
@@ -141,11 +213,13 @@ class Chord {
                 availableSymbols.push('(9)');
             }
         }
-        if (minorThird && majorThird) { 
+        if (sharpNinth || flatEleventh || (minorThird && majorThird)) {
             if (!diminishedFifth) { //deducing the sharp 9th
-                minorThird = false;
-                sharpNinth = true;
-                noteSharp9th = noteMinor3rd;
+                if (!sharpNinth) {
+                    minorThird = false;
+                    sharpNinth = true;
+                    noteSharp9th = noteMinor3rd;
+                }
                 let rollback = false;
                 if (availableTensions && getSemitoneDifference(root, noteSharp9th) != 2) {
                     sharpNinth = false;
@@ -156,9 +230,11 @@ class Chord {
                 }
             }
             else { //deducing the flat 11th
-                majorThird = false;
-                flatEleventh = true;
-                noteFlat11th = noteMinor3rd;
+                if (!flatEleventh) {
+                    majorThird = false;
+                    flatEleventh = true;
+                    noteFlat11th = noteMinor3rd;
+                }
                 let rollback = false;
                 if (availableTensions) { //this is an avoid tone, so only to be added if explicitly asked
                     flatEleventh = false;
@@ -170,10 +246,12 @@ class Chord {
             }
 
         }
-        if (fourth && (second || minorThird || majorThird)) { //deducing the 11th
-            fourth = false;
-            perfectEleventh = true;
-            note11th = note4th;
+        if (perfectEleventh || (fourth && (second || minorThird || majorThird))) { //deducing the 11th
+            if (!perfectEleventh) {
+                fourth = false;
+                perfectEleventh = true;
+                note11th = note4th;
+            }
             let rollback = false;
             if (availableTensions) {
                 if (minorThird && getSemitoneDifference(noteMinor3rd, note11th) != 2) {
@@ -189,10 +267,12 @@ class Chord {
                 availableSymbols.push('(11)');
             }
         }
-        if (perfectFifth && diminishedFifth && !brokenTriad) { //deducing the sharp 11th
-            diminishedFifth = false;
-            sharpEleventh = true;
-            noteSharp11th = noteDiminished5th;
+        if (sharpEleventh || (perfectFifth && diminishedFifth && !brokenTriad)) { //deducing the sharp 11th
+            if (!sharpEleventh) {
+                diminishedFifth = false;
+                sharpEleventh = true;
+                noteSharp11th = noteDiminished5th;
+            }
             let rollback = false;
             if (availableTensions) {
                 if (minorThird && getSemitoneDifference(noteMinor3rd, noteSharp11th) != 2) {
@@ -208,10 +288,12 @@ class Chord {
                 availableSymbols.push('(♯11)');
             }
         }
-        if (augmentedFifth && (diminishedFifth || perfectFifth)) { //deducing  the flat 13th
-            augmentedFifth = false;
-            flatThirteenth = true;
-            noteFlat13th = noteAugmented5th;
+        if (flatThirteenth || (augmentedFifth && (diminishedFifth || perfectFifth))) { //deducing  the flat 13th
+            if (!flatThirteenth) {
+                augmentedFifth = false;
+                flatThirteenth = true;
+                noteFlat13th = noteAugmented5th;
+            }
             let rollback = false;
             if (availableTensions) {
                 if (diminishedFifth && getSemitoneDifference(noteDiminished5th, noteFlat13th) != 2) {
@@ -227,10 +309,12 @@ class Chord {
                 availableSymbols.push('(♭13)');
             }
         }
-        if (majorSixth && (minorSeventh || majorSeventh)) { //deducing the 13th
-            majorSixth = false;
-            perfectThirteenth = true;
-            note13th = noteMajor6th;
+        if (perfectThirteenth || (majorSixth && (minorSeventh || majorSeventh))) { //deducing the 13th
+            if (!perfectThirteenth) {
+                majorSixth = false;
+                perfectThirteenth = true;
+                note13th = noteMajor6th;
+            }
             let rollback = false;
             if (availableTensions) {
                 if (diminishedFifth && getSemitoneDifference(noteDiminished5th, note13th) != 2) {
@@ -250,10 +334,12 @@ class Chord {
                 availableSymbols.push('(13)');
             }
         }
-        if (minorSeventh && majorSeventh) { //deducing the sharp 13th
-            minorSeventh = false;
-            sharpThirteenth = true;
-            noteSharp13th = noteMinor7th;
+        if (sharpThirteenth || (minorSeventh && majorSeventh)) { //deducing the sharp 13th
+            if (!sharpThirteenth) {
+                minorSeventh = false;
+                sharpThirteenth = true;
+                noteSharp13th = noteMinor7th;
+            }
             let rollback = false;
             if (availableTensions) {
                 if (diminishedFifth && getSemitoneDifference(noteDiminished5th, noteSharp13th) != 2) {
@@ -334,7 +420,7 @@ class Chord {
                 components.push(noteSharp13th);
             }
         }
-        else{
+        else {
             flatNinth = false;
             perfectNinth = false;
             sharpNinth = false;
@@ -425,7 +511,7 @@ class Chord {
         if (brokenTriad) { //if no 3rd or suspension is present
             symbol += '(no3)';
         }
-        if (no5th){ //if no 5th is present
+        if (no5th) { //if no 5th is present
             symbol += '(no5)';
         }
 
@@ -435,4 +521,90 @@ class Chord {
     toString() {
         return this.symbol;
     }
+}
+
+function analyze3rd(intervals) {
+    let interval = null;
+    let note = null;
+    let foundAt = -1;
+    for (let tuple of intervals) {
+        foundAt++;
+        if (tuple.interval.includes("THIRD")) {
+            interval = tuple.interval;
+            note = tuple.note;
+            break;
+        }
+    }
+    if (interval != null && intervalMap.get(4).includes(interval)) { //looking directly for the major 3rd interval
+        intervals.splice(foundAt, 1);
+        return [1, note];
+    }
+    else if (interval != null && intervalMap.get(3).includes(interval)) { //looking directly for the minor 3rd interval
+        intervals.splice(foundAt, 1);
+        return [0, note];
+    }
+    return [-1, null];
+}
+
+function analyze5th(intervals) {
+    let interval = null;
+    let note = null;
+    let foundAt = -1;
+    for (let tuple of intervals) {
+        foundAt++;
+        if (tuple.interval.includes("FIFTH")) {
+            interval = tuple.interval;
+            note = tuple.note;
+            break;
+        }
+    }
+    if (interval != null && intervalMap.get(8).includes(interval)) { //looking directly for the major 3rd interval
+        intervals.splice(foundAt, 1);
+        return [2, note];
+    }
+    else if (interval != null && intervalMap.get(7).includes(interval)) { //looking directly for the minor 3rd interval
+        intervals.splice(foundAt, 1);
+        return [1, note];
+    }
+    else if (interval != null && intervalMap.get(6).includes(interval)) { //looking directly for the minor 3rd interval
+        intervals.splice(foundAt, 1);
+        return [0, note];
+    }
+    return [-1, null];
+}
+
+function any3rd(intervals) {
+    for (let i = 0; i < intervals.length; i++) {
+        let current = intervals[i].interval;
+        let note = intervals[i].note;
+        if (intervalMap.get(3).includes(current)) { //looking for any other interval that can determine the 3rd
+            intervals.splice(i, 1);
+            return [0, note]; //for minor
+        }
+        else if (intervalMap.get(4).includes(current)) {
+            intervals.splice(i, 1);
+            return [1, note]; //for major
+        }
+    }
+    return [-1, null];
+}
+
+function any5th(intervals) {
+    for (let i = 0; i < intervals.length; i++) {
+        let current = intervals[i].interval;
+        let note = intervals[i].note;
+        if (intervalMap.get(6).includes(current)) { //looking for any other interval that can determine the 5th
+            intervals.splice(i, 1);
+            return [0, note]; //for diminished
+        }
+        else if (intervalMap.get(7).includes(current)) {
+            intervals.splice(i, 1);
+            return [1, note]; //for perfect
+        }
+        else if (intervalMap.get(8).includes(current)) {
+            intervals.splice(i, 1);
+            return [2, note]; //for augmented
+        }
+    }
+    return [-1, null];
 }

@@ -41,7 +41,7 @@ class Intervals {
         }
         if (name === "ROMANIAN_MAJOR") {
             intervalArray = [1, 3, 2, 1, 2, 1, 2];
-            modeArray = ['I. Romanian major', 'II.Super-Lydian augmented ♮6', 'III. Locrian ♮2 𝄫7', 'IV. Istrian (heptatonic)', 'V. Jazz minor ♭5', 'VI. Javanese ♭4', 'VII.Lydian augmented ♭3'];
+            modeArray = ['I. Romanian major', 'II.Super-Lydian augmented ♮6', 'III. Locrian ♮2 𝄫7', 'IV. Istrian (heptatonic)', 'V. Jazz minor ♭5', 'VI. Javanese ♭4', 'VII. Lydian augmented ♭3'];
         }
         this.intervalArray = shiftMode(intervalArray, mode);
         this.modeArray = modeArray;
