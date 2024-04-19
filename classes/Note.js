@@ -16,6 +16,14 @@ class Note {
         }
     }
 
+    unaltered() {
+        return !this.flat && !this.sharp && !this.doubleFlat && !this.doubleSharp;
+    }
+
+    sameType(note) {
+        return this.flat == note.flat && this.sharp == note.sharp && this.doubleFlat == note.doubleFlat && this.doubleSharp == note.doubleSharp;
+    }
+
     toString() {
         let string = this.symbol;
         if (this.flat) {
@@ -191,8 +199,8 @@ function getInterval(note1, note2) {
         }
     }
     let tonalDistance = getSemitoneDifference(note1, note2);
-    for(let candidate of intervalMap.get(tonalDistance)){
-        if(candidate.includes(expected)){
+    for (let candidate of intervalMap.get(tonalDistance)) {
+        if (candidate.includes(expected)) {
             return candidate;
         }
     }
