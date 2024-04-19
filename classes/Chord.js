@@ -214,7 +214,7 @@ class Chord {
                 availableSymbols.push('(9)');
             }
         }
-
+      
         if (sharpNinth) { //deducing the sharp 9th
             let rollback = false;
             if (availableTensions && getSemitoneDifference(root, noteSharp9th) != 2) {
