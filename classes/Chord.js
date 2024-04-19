@@ -53,6 +53,7 @@ class Chord {
             let tuple = { interval: getInterval(root, current), note: current };
             intervals.push(tuple);
         }
+
         components = [root];
 
         let thirdAnalysis = analyze3rd(intervals);
@@ -213,7 +214,7 @@ class Chord {
                 availableSymbols.push('(9)');
             }
         }
-        
+      
         if (sharpNinth) { //deducing the sharp 9th
             let rollback = false;
             if (availableTensions && getSemitoneDifference(root, noteSharp9th) != 2) {
@@ -513,6 +514,37 @@ class Chord {
 
     toString() {
         return this.symbol;
+    }
+
+    getIntervalVector() {
+        let components = this.components;
+        let vector = [0, 0, 0, 0, 0, 0];
+        for (let i = 0; i < components.length - 1; i++) {
+            let note1 = components[i];
+            for (let j = i + 1; j < components.length; j++) {
+                let note2 = components[j];
+                let distance = getSemitoneDifference(note1, note2);
+                if(distance == 1 || distance == 11){
+                    vector[0]++;
+                }
+                else if(distance == 2 || distance == 10){
+                    vector[1]++;
+                }
+                if(distance == 3 || distance == 9){
+                    vector[2]++;
+                }
+                if(distance == 4 || distance == 8){
+                    vector[3]++;
+                }
+                if(distance == 5 || distance == 7){
+                    vector[4]++;
+                }
+                if(distance == 6){
+                    vector[5]++;
+                }
+            }
+        }
+        return vector;
     }
 }
 

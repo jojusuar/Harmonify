@@ -12,10 +12,14 @@ function printHarmonicCircle() {
     let myHarmonicCircle = new HarmonicCircle(myScale, allAvailableTensions, allAvailableTensions);
     let currentChord = myHarmonicCircle.chords.reference;
     let formattedComponents = formatComponents(currentChord.getData());
+    let vector = currentChord.getData().getIntervalVector();
+    formattedComponents += '<h2>Interval vector: <' + vector + '></h2>';
     let htmlCode = '<button class="chord-button" onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';
     currentChord = currentChord.getNext();
     while (currentChord !== myHarmonicCircle.chords.reference) {
         formattedComponents = formatComponents(currentChord.getData());
+        vector = currentChord.getData().getIntervalVector();
+        formattedComponents += '<h2>Interval vector: <' + vector + '></h2>';
         htmlCode += '<button class="chord-button" onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';
         currentChord = currentChord.getNext();
     }
@@ -51,7 +55,7 @@ function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
 
-function toggleTensions(){
+function toggleTensions() {
     allAvailableTensions = !allAvailableTensions;
     printHarmonicCircle();
 }
