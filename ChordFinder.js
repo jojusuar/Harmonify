@@ -51,13 +51,13 @@ function findChord() {
     dummy.notes = pseudoScale;
     let possibleRoots = findPossibleRoots();
     divOutput.innerHTML += '<h2>Possible chords: </h2>';
-    let vector;
+    divOutput.innerHTML += 'Click on a chord to reveal its interval vector <br>';
     for (let root of possibleRoots) {
         let chord = new Chord(root, dummy, true, false);
-        vector = chord.getIntervalVector();
-        divOutput.innerHTML += '<button class="chord-button"><h1>' + chord.toString() + '</h1></button>';
+        let vector = chord.getIntervalVector();
+        divOutput.innerHTML += '<button class="chord-button" onclick="showIntervalVector(\'' + vector + '\')"><h1>' + chord.toString() + '</h1></button>';
     }
-    divOutput.innerHTML += '<h2>Interval vector: <'+vector+'></h2>';
+    
     let chordButtons = document.querySelectorAll('.chord-button');
     chordButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -206,5 +206,8 @@ deleteNoteButton.addEventListener('click', function () {
 });
 
 function showIntervalVector(vector){
-    divOutput.innerHTML += '<br><h2>Interval vector: <'+vector+'></h2>';
+    clearWarning();
+    clearOutput();
+    findChord();
+    divOutput.innerHTML += '<h2>Interval vector: '+vector+'</h2>';
 }
