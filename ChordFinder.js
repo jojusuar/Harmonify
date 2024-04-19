@@ -23,30 +23,30 @@ function deleteNote() {
 }
 
 function findChord() {
-    clearOutput();
     let rule = ["C", "D", "E", "F", "G", "A", "B"];
-    let noteOrder = [noteBuilder("C", false, false), noteBuilder("C", false, true), noteBuilder("D", false, false), noteBuilder("D", false, true), noteBuilder("E", false, false), noteBuilder("F", false, false), noteBuilder("F", false, true), noteBuilder("G", false, false), noteBuilder("G", false, true), noteBuilder("A", false, false), noteBuilder("A", false, true), noteBuilder("B", false, false)];
     let pseudoScale = new CircularLinkedList();
     let selectedNotesCopy = [...selectedNotes];
     selectedNotesCopy.sort((a, b) => {
-        let indexA = noteOrder.findIndex(object => object.toString() === a.toString() || object.toString() === a.equivalent.toString());
-        let indexB = noteOrder.findIndex(object => object.toString() === b.toString() || object.toString() === b.equivalent.toString());
+        let indexA;
+        let indexB;
+        for(let key of equivalencyMap.keys()){
+            if(indexA != undefined && indexB != undefined){
+                break;
+            }
+            for(let note of equivalencyMap.get(key)){
+                if(note.equals(a)){
+                    indexA = parseInt(key);
+                    break;
+                }
+                else if(note.equals(b)){
+                    indexB = parseInt(key);
+                    break;
+                }
+            }
+        }
         return indexA - indexB;
     });
     pseudoScale.addAll(selectedNotesCopy);
-    let elementCount = pseudoScale.size;
-    let start = pseudoScale.reference;
-    let adjacent = start.next;
-    for (let i = 0; i < elementCount; i++) {
-        let notesInBetween = rule.indexOf(start.data.symbol) - rule.indexOf(adjacent.data.symbol);
-        if (notesInBetween > 0) {
-            notesInBetween = 7 - notesInBetween;
-        }
-        notesInBetween = Math.abs(notesInBetween) - 1;
-        fillWithNull(pseudoScale, start, adjacent, notesInBetween);
-        start = adjacent;
-        adjacent = start.next;
-    }
     let dummy = new Scale();
     dummy.notes = pseudoScale;
     let possibleRoots = findPossibleRoots();
@@ -65,29 +65,6 @@ function findChord() {
             button.style.backgroundColor = 'rgb(70, 70, 70)';
         });
     });
-}
-
-function fillWithNull(list, node1, node2, count) {
-    if (count < 1) {
-        return;
-    }
-    let nullNode = new DoubleLinkNode();
-    nullNode.setData(null);
-    nullNode.setPrevious(node1);
-    node1.setNext(nullNode);
-    list.size++;
-    if (count > 1) {
-        for (let i = 0; i < count - 1; i++) {
-            let current = new DoubleLinkNode();
-            current.setData(null);
-            current.setPrevious(nullNode);
-            nullNode.setNext(current);
-            list.size++;
-            nullNode = current;
-        }
-    }
-    nullNode.setNext(node2);
-    node2.setPrevious(nullNode);
 }
 
 function findPossibleRoots() {
@@ -152,27 +129,37 @@ function clearWarning() {
 
 addNoteButton.addEventListener('click', function () {
     clearWarning();
-    let myNote = noteBuilder(noteValue, flat, sharp);
+    clearOutput();
+    let myNote = new Note(noteValue, flat, sharp, doubleFlat, doubleSharp);
     let duplicate = false;
-    let changesLeft = 2;
     for (let note of selectedNotes) {
-        if (myNote.equals(note) || myNote.equivalent.equals(note)) {
+        if (myNote.symbol === note.symbol) {
             duplicate = true;
-            divWarning.innerHTML = '<h2>The note you tried to input is already in the selection</h2>';
+            divWarning.innerHTML = '<h2>Another selected note already uses that symbol</h2>';
             break;
         }
-        if (myNote.symbol === note.symbol) {
-            myNote = myNote.equivalent;
-            changesLeft--;
-            for (let note2 of selectedNotes) {
-                if (myNote.symbol === note2.symbol) {
-                    changesLeft--;
+        let myNotePos;
+        let currentPos;
+        if (myNote.equals(note)){
+            myNotePos = 0;
+            currentPos = 0;
+        }
+        for(let key of equivalencyMap.keys()){
+            if(myNotePos != undefined && currentPos != undefined){
+                break;
+            }
+            for(let element of equivalencyMap.get(key)){
+                if(element.equals(myNote)){
+                    myNotePos = parseInt(key);
+                }
+                else if(element.equals(note)){
+                    currentPos = parseInt(key);
                 }
             }
         }
-        if (changesLeft === 0 || myNote.equivalent === undefined) {
+        if (myNotePos == currentPos) {
             duplicate = true;
-            divWarning.innerHTML = '<h2>The note you tried to input is not valid for the current selection</h2>';
+            divWarning.innerHTML = '<h2>Another selected note already has that pitch class</h2>';
             break;
         }
     }
@@ -197,6 +184,7 @@ addNoteButton.addEventListener('click', function () {
 
 deleteNoteButton.addEventListener('click', function () {
     clearWarning();
+    clearOutput();
     deleteNote();
     displaySelectedNotes();
     if (selectedNotes.length > 2) {
