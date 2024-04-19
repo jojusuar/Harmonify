@@ -213,39 +213,28 @@ class Chord {
                 availableSymbols.push('(9)');
             }
         }
-        if (sharpNinth || flatEleventh || (minorThird && majorThird)) {
-            if (!diminishedFifth) { //deducing the sharp 9th
-                if (!sharpNinth) {
-                    minorThird = false;
-                    sharpNinth = true;
-                    noteSharp9th = noteMinor3rd;
-                }
-                let rollback = false;
-                if (availableTensions && getSemitoneDifference(root, noteSharp9th) != 2) {
-                    sharpNinth = false;
-                    rollback = true;
-                }
-                if (allTensions && !rollback) {
-                    availableSymbols.push('(♯9)');
-                }
+        
+        if (sharpNinth) { //deducing the sharp 9th
+            let rollback = false;
+            if (availableTensions && getSemitoneDifference(root, noteSharp9th) != 2) {
+                sharpNinth = false;
+                rollback = true;
             }
-            else { //deducing the flat 11th
-                if (!flatEleventh) {
-                    majorThird = false;
-                    flatEleventh = true;
-                    noteFlat11th = noteMinor3rd;
-                }
-                let rollback = false;
-                if (availableTensions) { //this is an avoid tone, so only to be added if explicitly asked
-                    flatEleventh = false;
-                    rollback = true;
-                }
-                if (allTensions && !rollback) {
-                    availableSymbols.push('(♭11)');
-                }
+            if (allTensions && !rollback) {
+                availableSymbols.push('(♯9)');
             }
-
         }
+        else if (flatEleventh) { //deducing the flat 11th
+            let rollback = false;
+            if (availableTensions) { //this is an avoid tone, so only to be added if explicitly asked
+                flatEleventh = false;
+                rollback = true;
+            }
+            if (allTensions && !rollback) {
+                availableSymbols.push('(♭11)');
+            }
+        }
+
         if (perfectEleventh || (fourth && (second || minorThird || majorThird))) { //deducing the 11th
             if (!perfectEleventh) {
                 fourth = false;
