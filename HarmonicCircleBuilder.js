@@ -19,7 +19,7 @@ function printHarmonicCircle() {
     while (currentChord !== myHarmonicCircle.chords.reference) {
         formattedComponents = formatComponents(currentChord.getData());
         vector = currentChord.getData().getIntervalVector();
-        formattedComponents += '<h2>Interval vector: ' + vector + '</h2>';
+        formattedComponents += '<h2>Interval vector: <' + vector + '></h2>';
         htmlCode += '<button class="chord-button" onclick="openPopup(\'' + formattedComponents + '\')"><h1>' + currentChord.getData().toString() + '</h1></button>';
         currentChord = currentChord.getNext();
     }
