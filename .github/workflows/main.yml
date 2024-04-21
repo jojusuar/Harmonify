@@ -11,17 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: Generate API module
-       env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+     - uses: actions/checkout@v3
+       with:
+        repository: jojusuar/Harmonify-android
+        ref: 'main'
+        token:  ${{ secrets.TOKEN }}
+    
+     - name: setup git config
        run: |
-        git clone https://user:$GITHUB_TOKEN@github.com/jojusuar/Harmonify-android
-        cd Harmonify-android
         git config --unset-all http.https://github.com/.extraheader
         git config user.name "jojusuar"
         git config user.email "jojusuar@espol.edu.ec"
-        git checkout -b autotemp
         touch WebUtil.js
         git add WebUtil.js
-        git commit -am "Add new file"
-        git push -set-upstream origin autotemp
+        git commit -m 'testing actions'
+        git push origin main
+        
