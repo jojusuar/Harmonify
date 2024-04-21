@@ -1,29 +1,22 @@
-name: Commit to Another Repo
+name: Push File
 
-on:
-  push:
-    branches:
-      - main  # Change this to match your branch
-  workflow_dispatch:
+on: push
 
 jobs:
-  commit-to-another-repo:
+  copy-file:
     runs-on: ubuntu-latest
-
     steps:
-     - uses: actions/checkout@v3
-       with:
-        repository: jojusuar/Harmonify-android
-        ref: 'main'
-        token:  ${{ secrets.TOKEN }}
-    
-     - name: setup git config
-       run: |
-        git config --unset-all http.https://github.com/.extraheader
-        git config user.name "jojusuar"
-        git config user.email "jojusuar@espol.edu.ec"
-        touch WebUtil.js
-        git add WebUtil.js
-        git commit -m 'testing actions'
-        git push origin main
-        
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Pushes test file
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+      with:
+        source_file: 'WebUtil.js'
+        destination_repo: 'dmnemec/release-test'
+        destination_folder: 'assets'
+        user_email: 'jojusuar@espol.edu.ec'
+        user_name: 'jojusuar'
+        commit_message: 'automated commit'
