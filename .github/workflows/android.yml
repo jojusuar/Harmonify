@@ -21,7 +21,6 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      run: chmod +x android/Harmonify/gradlew
+      run: chmod +x /android/Harmonify/gradlew
     - name: Build with Gradle
-      working-directory: android/Harmonify 
-      run: ./gradlew build
+      run: ./android/Harmonify/gradlew build
