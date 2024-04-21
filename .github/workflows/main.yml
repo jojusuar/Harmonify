@@ -14,9 +14,9 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
       with:
-        source_file: 'WebUtil.js'
+        source_file: '.'
         destination_repo: 'jojusuar/Harmonify-android'
-        destination_folder: 'assets'
+        destination_folder: 'app/src/main/assets'
         user_email: 'jojusuar@espol.edu.ec'
         user_name: 'jojusuar'
         commit_message: 'automated commit'
