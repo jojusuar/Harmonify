@@ -1,0 +1,28 @@
+name: Commit to Another Repo
+
+on:
+  push:
+    branches:
+      - main  # Change this to match your branch
+  workflow_dispatch:
+
+jobs:
+  commit-to-another-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Commit to Another Repo
+        run: |
+          git config --global user.email "jojusuar@espol.edu.ec"
+          git config --global user.name "jojusuar"
+          git remote add other_repo https://github.com/jojusuar/Harmonify-android/
+          git fetch other_repo
+          git checkout -b temp_branch
+          # Replace 'path/to/your/file' with the path to the file you want to commit
+          cp index.html .
+          git add .
+          git commit -m "Automated commit to another repo"
+          git push -f other_repo temp_branch
