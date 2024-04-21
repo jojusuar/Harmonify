@@ -12,3 +12,4 @@ TO-DO:
 - Chord components calculator given any input chord
 - Add sound playback
 - Melody harmonizer by intervals
+- Scale finder given heptatonic melody
