@@ -25,9 +25,3 @@ jobs:
     - name: Build with Gradle
       working-directory: android/Harmonify 
       run: ./gradlew build
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v2
-      with:
-        name: harmonify
-        path: android/Harmonify/app/build/outputs/apk/release/harmonify.apk
