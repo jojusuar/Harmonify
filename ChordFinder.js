@@ -74,6 +74,9 @@ function findChord() {
         button.classList.add("chord-button");
         let header = document.createElement("h1");
         header.textContent = chord.toString();
+        if (!chord.components[0].equals(selectedNotes[0])) {
+            header.textContent = chord.toString() + '/' + selectedNotes[0].toString();
+        }
         button.appendChild(header);
         divOutput.appendChild(button);
         button.addEventListener("click", function () {
