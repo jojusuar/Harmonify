@@ -177,7 +177,7 @@ greekMap.set(5, 'Aeolian');
 greekMap.set(6, 'Locrian');
 
 function makeItUp() {
-    let closestScale = getClosest2();
+    let closestScale = getClosest();
     let scaleName = selectedNotes[0].toString() + ' ' + greekMap.get(closestScale[1]);
     let scale = closestScale[0];
     let notes = scale.notes.toArray();
@@ -245,27 +245,7 @@ function makeItUp() {
     return scaleName;
 }
 
-function getClosest(identifier) {
-    let numString = identifier.toString();
-    let coincidences = 0;
-    let closest;
-    for (let key of greekMap.keys()) {
-        let modeID = String(key);
-        let counter = 0;
-        for (let i = 0; i < modeID.length; i++) {
-            if (numString[i] == modeID[i]) {
-                counter++;
-            }
-        }
-        if (counter > coincidences) {
-            coincidences = counter;
-            closest = parseInt(key);
-        }
-    }
-    return closest;
-}
-
-function getClosest2() {
+function getClosest() {
     let scales = [new Scale(selectedNotes[0], new Intervals("DIATONIC", 0)), new Scale(selectedNotes[0], new Intervals("DIATONIC", 1)), new Scale(selectedNotes[0], new Intervals("DIATONIC", 2)), new Scale(selectedNotes[0], new Intervals("DIATONIC", 3)), new Scale(selectedNotes[0], new Intervals("DIATONIC", 4)), new Scale(selectedNotes[0], new Intervals("DIATONIC", 5)), new Scale(selectedNotes[0], new Intervals("DIATONIC", 6))]
     let mostCoincidences = 0;
     let closest;
