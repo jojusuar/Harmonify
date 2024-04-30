@@ -79,7 +79,7 @@ deleteButton.addEventListener("click", function () {
         if (selectedNotes.length == 0) {
             deleteButton.style.display = 'none';
         }
-        else if (selectedNotes.length < 7){
+        else if (selectedNotes.length < 7) {
             addButton.style.display = 'inline-block';
         }
         selectedButton = undefined;
@@ -123,7 +123,7 @@ function normalizeRoot() {
     if (root.doubleFlat || root.doubleSharp) {
         let equivalents = getEquivalents(root);
         for (let note of equivalents) {
-            if (note.unaltered() || !note.doubleFlat || !note.doubleSharp) {
+            if (note.unaltered() || !(note.doubleFlat || note.doubleSharp)) {
                 selectedNotes[0] = note;
                 break;
             }
@@ -303,7 +303,8 @@ function makeItUp() {
                     scaleName += ' 𝄪' + note;
                 }
                 else {
-                    scaleName += '?';
+                    tryWithEquivalent();
+                    return makeItUp();
                 }
             }
             else if (!current.flat && !current.sharp) {
@@ -320,7 +321,8 @@ function makeItUp() {
                     scaleName += ' 𝄪' + note;
                 }
                 else {
-                    scaleName += '?';
+                    tryWithEquivalent();
+                    return makeItUp();
                 }
             }
             else if (current.sharp) {
@@ -337,12 +339,18 @@ function makeItUp() {
                     scaleName += ' ♯' + note;
                 }
                 else {
-                    scaleName += '?';
+                    tryWithEquivalent();
+                    return makeItUp();
                 }
             }
         }
     }
     return scaleName;
+}
+
+function tryWithEquivalent() {
+    let equivalents = getEquivalents(selectedNotes[0]);
+    selectedNotes[0] = equivalents[0];
 }
 
 function getClosest() {
